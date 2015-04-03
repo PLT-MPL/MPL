@@ -1,7 +1,6 @@
 package definition;
 import java.util.*;
-
-
+/*hi*/
 public class Melody {
 	
 	private List<Note> m_noteList;
