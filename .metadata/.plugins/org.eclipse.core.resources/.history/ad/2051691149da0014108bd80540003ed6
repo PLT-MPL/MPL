@@ -1,0 +1,11 @@
+package definition;
+
+public class Music {
+	public Music(){}
+	
+	public Music(Track [] tracks){}
+	
+	public Music (Music music){}
+	
+	
+}

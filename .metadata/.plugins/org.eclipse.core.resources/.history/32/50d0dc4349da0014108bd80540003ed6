@@ -1,0 +1,17 @@
+package definition;
+
+public class Music {
+	public Music(){}
+	
+	public Music(Track [] tracks){}
+	
+	public Music (Music music){}
+	
+	Track getTrack(int index){
+		return tracks[index];
+	}
+	
+	
+	
+	private Track [] tracks;
+}
