@@ -50,4 +50,9 @@ public class Melody {
 		
 		m_noteList.remove(index);
 	}
+	
+	
+	
+	
+
 }
