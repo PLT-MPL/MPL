@@ -1,31 +1,44 @@
 package definition;
+import java.util.*;
+
 
 public class Music {
-	public Music(){}
 	
-	public Music(Track [] tracks){}
+	private List<Track> m_trackList;
 	
-	public Music (Music music){}
-	
-	public Track getTrack(int index){
-		return tracks[index];
+	public Music(){
+		m_trackList = new ArrayList<Track>();
 	}
 	
-	public Track [] getTracks(){
-		return tracks;
+	public Music(List<Track> trackList){
+		m_trackList = trackList;
+	}
+	
+	public Music(Music music){
+		m_trackList = new ArrayList<Track>(music.getTracks());
+	}
+	
+	public Track getTrack(int index){
+		if(index >= m_trackList.size())
+			throw new NullPointerException();
+		
+		return m_trackList.get(index);
+	}
+	
+	public List<Track> getTracks(){
+		return m_trackList;
 	}
 	
 	public int getNumberOfTracks(){
-		return tracks.length;
+		return m_trackList.size();
 	}
 	
 	public int getTimeLength(){
+		
 		int maxTimeLength = 0;
-		for(Track track : tracks)
+		for(Track track : m_trackList)
 			if(track.getMelody().getTimeLength() > maxTimeLength)
 				maxTimeLength = track.getMelody().getTimeLength();
 		return maxTimeLength;
 	}
-	
-	private Track [] tracks;
 }

@@ -20,7 +20,7 @@ public class Melody {
 		if(m_noteList == null)
 			m_noteList = new ArrayList<Note>();
 		
-		m_noteList = melody.getNoteList();
+		m_noteList = new ArrayList<Note>(melody.getNoteList());
 	}
 	
 	public List<Note> getNoteList(){
