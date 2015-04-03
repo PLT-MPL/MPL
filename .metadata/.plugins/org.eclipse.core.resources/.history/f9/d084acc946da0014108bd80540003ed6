@@ -50,8 +50,4 @@ public class Melody {
 		
 		m_noteList.remove(index);
 	}
-	
-	public int getLength(){
-		return m_noteList.size();
-	}
 }
