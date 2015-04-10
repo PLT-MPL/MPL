@@ -5,15 +5,13 @@ public class Track {
 	private Melody t_melody;
 	
 	public Track(){
-		t_melody = new Melody();
-		// Default timbre is set to PIANO
+		// TODO:
 		t_timbre = 0;
+		t_melody = new Melody();
 	}
 	
 	public Track(Melody melody){
 		t_melody = melody;
-		// Default is set to PIANO
-		t_timbre = 0;
 	}
 	
 	public Track(Melody melody, int timbre){
@@ -22,8 +20,8 @@ public class Track {
 	}
 	
 	public Track(Track track){
-		t_melody = new Melody(track.getMelody());
 		t_timbre = track.getTimbre();
+		t_melody = new Melody(track.getMelody());
 	}
 	
 	public void setTimbre(int timbre){
@@ -31,14 +29,7 @@ public class Track {
 	}
 	
 	public void insertMelody(int startTime, Melody melody){
-		if(startTime < 0)
-			throw new IllegalArgumentException();
-		for(int i = 0; i < melody.getLength(); i++){
-			Note note = melody.getNote(0);
-			int tmp_startTime = note.getStartTime() + startTime;
-			note.setStartTime(tmp_startTime);
-			t_melody.addNote(note);
-		}
+		// TODO:
 	}
 	
 	public Melody getMelody(){

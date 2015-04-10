@@ -1,12 +1,13 @@
 package definition;
 
+
 public class Note {
 	
 	private static final int C4 = 0;
 	
 	private int m_pitch;
 	private int m_duration;
-	private int m_startTime;
+	private int m_starttime;
 	private int m_strength;
 
 	
@@ -14,7 +15,7 @@ public class Note {
 	{
 		m_pitch = 0;
 		m_duration = 0;
-		m_startTime = 0;
+		m_starttime = 0;
 		m_strength = 0;
 	}
 	
@@ -29,18 +30,18 @@ public class Note {
 		m_duration = duration;
 	}
 	
-	public Note(int pitch, int duration, int startTime)
+	public Note(int pitch, int duration, int starttime)
 	{
 		m_pitch = pitch;
 		m_duration = duration;
-		m_startTime = startTime;
+		m_starttime = starttime;
 	}
 	
-	public Note(int pitch, int duration, int startTime, int strength)
+	public Note(int pitch, int duration, int starttime, int strength)
 	{
 		m_pitch = pitch;
 		m_duration = duration;
-		m_startTime = startTime;
+		m_starttime = starttime;
 		m_strength = strength;
 	}
 	
@@ -48,7 +49,7 @@ public class Note {
 	{
 		m_pitch = note.getPitch();
 		m_duration = note.getDuration();
-		m_startTime = note.getStartTime();
+		m_starttime = note.getStarttime();
 		m_strength = note.getStrength();
 	}
 	
@@ -82,13 +83,19 @@ public class Note {
 		return m_strength;
 	}
 	
-	public void setStartTime(int startTime)
+	public void setStarttime(int starttime)
 	{
-		m_startTime = startTime;
+		m_starttime = starttime;
 	}
 	
-	public int getStartTime()
+	public int getStarttime()
 	{
-		return m_startTime;
+		return m_starttime;
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Note ob = new Note(C4);
 	}
 }

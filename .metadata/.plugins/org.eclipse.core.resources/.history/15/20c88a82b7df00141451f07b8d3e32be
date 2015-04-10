@@ -31,13 +31,12 @@ public class Track {
 	}
 	
 	public void insertMelody(int startTime, Melody melody){
-		if(startTime < 0)
-			throw new IllegalArgumentException();
+		// TODO:
 		for(int i = 0; i < melody.getLength(); i++){
 			Note note = melody.getNote(0);
 			int tmp_startTime = note.getStartTime() + startTime;
-			note.setStartTime(tmp_startTime);
-			t_melody.addNote(note);
+			n.setStartTime(tmp_startTime);
+			t_melody.addNote(n);
 		}
 	}
 	

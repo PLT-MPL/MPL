@@ -1,5 +1,6 @@
 package definition;
 
+
 public class Note {
 	
 	private static final int C4 = 0;
@@ -48,7 +49,7 @@ public class Note {
 	{
 		m_pitch = note.getPitch();
 		m_duration = note.getDuration();
-		m_startTime = note.getStartTime();
+		m_startTime = note.getstartTime();
 		m_strength = note.getStrength();
 	}
 	
@@ -82,13 +83,19 @@ public class Note {
 		return m_strength;
 	}
 	
-	public void setStartTime(int startTime)
+	public void setstartTime(int startTime)
 	{
 		m_startTime = startTime;
 	}
 	
-	public int getStartTime()
+	public int getstartTime()
 	{
 		return m_startTime;
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Note ob = new Note(C4);
 	}
 }

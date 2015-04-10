@@ -1,5 +1,6 @@
 package definition;
 
+
 public class Note {
 	
 	private static final int C4 = 0;
@@ -90,5 +91,11 @@ public class Note {
 	public int getStartTime()
 	{
 		return m_startTime;
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		Note ob = new Note(C4);
 	}
 }

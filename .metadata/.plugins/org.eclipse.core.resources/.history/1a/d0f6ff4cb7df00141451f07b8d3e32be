@@ -84,7 +84,7 @@ public class Melody {
 		int maxEnd = 0;
 		for(Note note : m_noteList)
 		{
-			int endtime = note.getStartTime() + note.getDuration();
+			int endtime = note.getStarttime() + note.getDuration();
 			if(endtime > maxEnd)
 				maxEnd = endtime;
 		}

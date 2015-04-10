@@ -91,4 +91,10 @@ public class Note {
 	{
 		return m_startTime;
 	}
+	
+	
+	public static void main(String[] args)
+	{
+		Note ob = new Note(C4);
+	}
 }

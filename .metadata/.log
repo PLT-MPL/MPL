@@ -572,3 +572,6 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 
 !ENTRY com.amazonaws.eclipse.sdk.ui 1 0 2015-04-10 15:07:14.925
 !MESSAGE SDK download completes. Location: /var/folders/ch/khrd9ws50db0mb60dtvds2rc0000gn/T/aws-android-sdk5042872769089843955/sdk.zip, File-length: 12225213
+
+!ENTRY com.amazonaws.eclipse.sdk.ui 1 0 2015-04-10 15:09:54.756
+!MESSAGE SDK download completes. Location: /var/folders/ch/khrd9ws50db0mb60dtvds2rc0000gn/T/aws-java-sdk7548096823043365552/sdk.zip, File-length: 100841912

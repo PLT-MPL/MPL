@@ -34,6 +34,7 @@ public class Music {
 	}
 	
 	public int getTimeLength(){
+		
 		int maxTimeLength = 0;
 		for(Track track : m_trackList)
 			if(track.getMelody().getTimeLength() > maxTimeLength)
