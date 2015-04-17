@@ -3,14 +3,14 @@
 let Pitch_cons = (['A'-'G']('#' | 'b')?['0'-'9'])
 let Integer_cons = ['0'-'9']+
 let Double_cons = ['0'-'9']+['.']['0' - '9']+ | ['0'-'9']+['.'] | ['.']['0' - '9']+
-let String_cons = '\"' ([^'\"']* as lxm) '\"'
-let Instrument_cons = 'PIANO'| 'VIOLIN' 
-
+let String_cons = '\"' ('\\'_ | [^'\"'])* '\"'
+let Identifier = ['a'-'z' 'A'-'Z'] (['_' 'a'-'z' 'A'-'Z' '0'-'9'])*
+let Instrument_cons = "PIANO"| "VIOLIN"
 
 rule token = parse
-[' ' '\t' '\r' '\n']{token lexbuf}
-| "/*"              {comment lexbuf}
-| "//"				{comment_newline lexbuf}
+[' ' '\t' '\r' '\n']{ token lexbuf }
+| "/*"              { comment lexbuf }
+| "//"				{ comment_newline lexbuf }
 | '('       		{ LPA }          
 | ')'       		{ RPA }
 | '['       		{ LBRK }          
@@ -20,8 +20,8 @@ rule token = parse
 | ';'       		{ SEMI }
 | ','				{ COM }
 | '=' 				{ ASS }
-| '+'       		{ PLUS }
-| '-'       		{ MINUS }
+| '+'       		{ ADD }
+| '-'       		{ SUB }
 | '*'       		{ MUL }           
 | '/'       		{ DIV }
 | '!'       		{ NOT }
@@ -34,9 +34,7 @@ rule token = parse
 | "<="      		{ LEQ }             
 | ">="      		{ GEQ }
 
-
-
-| "int" 			{ DATATYPE("Integer") }
+| "int" 			{ DATATYPE("Int") }
 | "string"   		{ DATATYPE("String") }
 | "boolean" 		{ DATATYPE("Boolean") }
 | "double"  		{ DATATYPE("Double") }
@@ -46,21 +44,22 @@ rule token = parse
 | "Track" 			{ DATATYPE("Track") }
 | "Music" 			{ DATATYPE("Music") }
 
-| "ture"|"false" as lxm { BOOL_CON(bool_of_string lxm)}
-| "return" 			{RETURN}
-| "if"     			{IF}
-| "else"   			{ELSE}
-| "for"    			{FOR}
-| "while"  			{WHILE}
-| "break" 			{BREAK}
-| "continue" 		{CONTINUE}
+| "return" 			{ RETURN }
+| "if"     			{ IF }
+| "else"   			{ ELSE }
+| "for"    			{ FOR }
+| "while"  			{ WHILE }
+| "break" 			{ BREAK }
+| "continue" 		{ CONTINUE }
 
-
+| Identifier		as lxm { ID(lxm) }
+| "ture"|"false" 	as lxm { BOOL_CON(bool_of_string lxm) }
 | Integer_cons    	as lxm { INT_CON(int_of_string lxm) }
-| Double_cons	  	as lxm { DOUB_CON(double_of_string lxm)}
-| Picth_cons	  	as lxm { PIT_CON(Note_of_string) lxm)}
-| Instrument_cons 	as lxm { INS_CON(Track_of_string) lxm)}
-| eof			  	{EOF}
+| Double_cons	  	as lxm { DOUB_CON(float_of_string lxm) }
+| Pitch_cons	  	as lxm { PIT_CON(lxm) }
+| Instrument_cons 	as lxm { INS_CON(lxm) }
+| String_cons		as lxm { STR_CON(lxm) }
+| eof			  	{ EOF }
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
 
 and comment = parse
