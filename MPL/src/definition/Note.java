@@ -2,31 +2,36 @@ package definition;
 
 public class Note {
 	
-	private static final int C4 = 0;
-	
 	private int m_pitch;
 	private int m_duration;
 	private int m_startTime;
 	private int m_strength;
 
-	
 	public Note()
 	{
-		m_pitch = 0;
-		m_duration = 0;
-		m_startTime = 0;
-		m_strength = 0;
+		m_pitch = C.NOTE_DEFAULT_PITCH;
+		m_duration = C.NOTE_DEFAULT_DURATION;
+		m_startTime = C.NOTE_DEFAULT_STARTTIME;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+		C.NOTE_DEFAULT_STARTTIME += C.NOTE_DEFAULT_DURATION;
 	}
 	
 	public Note(int pitch)
 	{
 		m_pitch = pitch;
+		m_duration = C.NOTE_DEFAULT_DURATION;
+		m_startTime = C.NOTE_DEFAULT_STARTTIME;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+		C.NOTE_DEFAULT_STARTTIME += C.NOTE_DEFAULT_DURATION;
 	}
 	
 	public Note(int pitch, int duration)
 	{
 		m_pitch = pitch;
 		m_duration = duration;
+		m_startTime = C.NOTE_DEFAULT_STARTTIME;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+		C.NOTE_DEFAULT_STARTTIME += duration;
 	}
 	
 	public Note(int pitch, int duration, int startTime)
@@ -34,6 +39,7 @@ public class Note {
 		m_pitch = pitch;
 		m_duration = duration;
 		m_startTime = startTime;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
 	}
 	
 	public Note(int pitch, int duration, int startTime, int strength)

@@ -1,8 +1,0 @@
-package definition;
-
-public class Track {
-	private int timbre;
-	private Melody melody;
-	
-	
-}

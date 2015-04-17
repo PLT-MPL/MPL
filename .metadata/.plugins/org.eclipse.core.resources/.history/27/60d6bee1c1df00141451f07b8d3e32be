@@ -1,0 +1,29 @@
+package function;
+
+import definition.*;
+
+public class PublicFunction {
+	public static void setNoteDefault(int pitch, int starttime,
+			int duration, int strength){
+		
+	}
+	
+	public static int changeToMillisecond(int minute, int second,
+			int millisecond){
+		
+		return 0;
+	}
+	
+	public static void printTime(int millisecond){
+		
+	}
+	
+	public static Music read(String path){
+		
+		return new Music();
+	}
+	
+	public static void write(Music music, String outputpath){
+		
+	}
+}

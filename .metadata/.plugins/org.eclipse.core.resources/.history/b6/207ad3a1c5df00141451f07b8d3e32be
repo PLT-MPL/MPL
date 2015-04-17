@@ -1,0 +1,7 @@
+package definition;
+
+public class C {
+	private static final int C4 = 60;
+	private static final int D4 = 62;
+	
+}

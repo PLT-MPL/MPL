@@ -1,0 +1,10 @@
+package function;
+
+public class PublicFunction {
+	public static void setNoteDefault(int pitch, int starttime,
+			int duration, int strength){
+		
+	}
+	
+	
+}
