@@ -57,9 +57,9 @@ rule token = parse
 
 
 | Integer_cons    	as lxm { INT_CON(int_of_string lxm) }
-| Double_cons	  	as lxm { DOUB_CON(double_of_string) lxm}
-| Picth_cons	  	as lxm { PIT_CON(Note_of_string) lxm}
-| Instrument_cons 	as lxm { INS_CON(Track_of_string) lxm}
+| Double_cons	  	as lxm { DOUB_CON(double_of_string lxm)}
+| Picth_cons	  	as lxm { PIT_CON(Note_of_string) lxm)}
+| Instrument_cons 	as lxm { INS_CON(Track_of_string) lxm)}
 | eof			  	{EOF}
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
 
