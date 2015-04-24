@@ -69,11 +69,6 @@ public class Melody {
 		return m_noteList.get(index);
 	}
 	
-	public List<Note> getNotes(){
-		
-		return m_noteList;
-	}
-	
 	public int getLength(){
 		
 		return m_noteList.size();
@@ -89,6 +84,33 @@ public class Melody {
 				maxEnd = endtime;
 		}
 		return maxEnd;
+	}
+	
+	public void addMelody(Melody melody)
+	{
+		List<Note> noteLists = melody.getNoteList();
+		if(noteLists == null)
+			throw new NullPointerException();
+		
+		int listSize = m_noteList.size();
+		Note lastNote = m_noteList.get(listSize-1);
+		int startTime = lastNote.getStartTime() + lastNote.getDuration();
+		
+		for(Note note: noteLists)
+		{
+			note.setStartTime(startTime);
+			startTime = startTime + note.getDuration();
+		}
+		m_noteList.addAll(noteLists);
+	}
+	
+	public void multipleMelody(Melody melody)
+	{
+		List<Note> noteLists = melody.getNoteList();
+		if(noteLists == null)
+			throw new NullPointerException();
+		
+		m_noteList.addAll(noteLists);
 	}
 }
 
