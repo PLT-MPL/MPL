@@ -3,8 +3,8 @@ package definition;
 public class Note {
 	
 	private int m_pitch;
-	private int m_duration;
-	private int m_startTime;
+	private long m_duration;
+	private long m_startTime;
 	private int m_strength;
 
 	public Note()
@@ -25,7 +25,7 @@ public class Note {
 		C.NOTE_DEFAULT_STARTTIME += C.NOTE_DEFAULT_DURATION;
 	}
 	
-	public Note(int pitch, int duration)
+	public Note(int pitch, long duration)
 	{
 		m_pitch = pitch;
 		m_duration = duration;
@@ -34,7 +34,7 @@ public class Note {
 		C.NOTE_DEFAULT_STARTTIME += duration;
 	}
 	
-	public Note(int pitch, int duration, int startTime)
+	public Note(int pitch, long duration, long startTime)
 	{
 		m_pitch = pitch;
 		m_duration = duration;
@@ -42,7 +42,7 @@ public class Note {
 		m_strength = C.NOTE_DEFAULT_STRENGTH;
 	}
 	
-	public Note(int pitch, int duration, int startTime, int strength)
+	public Note(int pitch, long duration, long startTime, int strength)
 	{
 		m_pitch = pitch;
 		m_duration = duration;
@@ -58,12 +58,12 @@ public class Note {
 		m_strength = note.getStrength();
 	}
 	
-	public void setDuration(int duration)
+	public void setDuration(long duration)
 	{
 		m_duration = duration;
 	}
 	
-	public int getDuration()
+	public long getDuration()
 	{
 		return m_duration;
 	}
@@ -88,12 +88,12 @@ public class Note {
 		return m_strength;
 	}
 	
-	public void setStartTime(int startTime)
+	public void setStartTime(long startTime)
 	{
 		m_startTime = startTime;
 	}
 	
-	public int getStartTime()
+	public long getStartTime()
 	{
 		return m_startTime;
 	}

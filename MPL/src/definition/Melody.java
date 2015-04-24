@@ -74,12 +74,12 @@ public class Melody {
 		return m_noteList.size();
 	}
 	
-	public int getTimeLength(){
+	public long getTimeLength(){
 		
-		int maxEnd = 0;
+		long maxEnd = 0;
 		for(Note note : m_noteList)
 		{
-			int endtime = note.getStartTime() + note.getDuration();
+			long endtime = note.getStartTime() + note.getDuration();
 			if(endtime > maxEnd)
 				maxEnd = endtime;
 		}

@@ -18,6 +18,10 @@ public class Music {
 		m_trackList = new ArrayList<Track>(music.getTracks());
 	}
 	
+	public void insertTrack(Track track){
+		m_trackList.add(track);
+	}
+	
 	public Track getTrack(int index){
 		if(index >= m_trackList.size())
 			throw new NullPointerException();
@@ -33,8 +37,8 @@ public class Music {
 		return m_trackList.size();
 	}
 	
-	public int getTimeLength(){
-		int maxTimeLength = 0;
+	public long getTimeLength(){
+		long maxTimeLength = 0;
 		for(Track track : m_trackList)
 			if(track.getMelody().getTimeLength() > maxTimeLength)
 				maxTimeLength = track.getMelody().getTimeLength();

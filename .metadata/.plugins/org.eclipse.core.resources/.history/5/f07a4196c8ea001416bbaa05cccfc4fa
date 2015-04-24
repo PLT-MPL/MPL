@@ -1,0 +1,100 @@
+package definition;
+
+public class Note {
+	
+	private int m_pitch;
+	private long m_duration;
+	private long m_startTime;
+	private int m_strength;
+
+	public Note()
+	{
+		m_pitch = C.NOTE_DEFAULT_PITCH;
+		m_duration = C.NOTE_DEFAULT_DURATION;
+		m_startTime = C.NOTE_DEFAULT_STARTTIME;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+		C.NOTE_DEFAULT_STARTTIME += C.NOTE_DEFAULT_DURATION;
+	}
+	
+	public Note(int pitch)
+	{
+		m_pitch = pitch;
+		m_duration = C.NOTE_DEFAULT_DURATION;
+		m_startTime = C.NOTE_DEFAULT_STARTTIME;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+		C.NOTE_DEFAULT_STARTTIME += C.NOTE_DEFAULT_DURATION;
+	}
+	
+	public Note(int pitch, int duration)
+	{
+		m_pitch = pitch;
+		m_duration = duration;
+		m_startTime = C.NOTE_DEFAULT_STARTTIME;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+		C.NOTE_DEFAULT_STARTTIME += duration;
+	}
+	
+	public Note(int pitch, long duration, longt startTime)
+	{
+		m_pitch = pitch;
+		m_duration = duration;
+		m_startTime = startTime;
+		m_strength = C.NOTE_DEFAULT_STRENGTH;
+	}
+	
+	public Note(int pitch, long duration, long startTime, int strength)
+	{
+		m_pitch = pitch;
+		m_duration = duration;
+		m_startTime = startTime;
+		m_strength = strength;
+	}
+	
+	public Note(Note note)
+	{
+		m_pitch = note.getPitch();
+		m_duration = note.getDuration();
+		m_startTime = note.getStartTime();
+		m_strength = note.getStrength();
+	}
+	
+	public void setDuration(int duration)
+	{
+		m_duration = duration;
+	}
+	
+	public long getDuration()
+	{
+		return m_duration;
+	}
+	
+	public void setPitch(int pitch)
+	{
+		m_pitch = pitch;
+	}
+	
+	public int getPitch()
+	{
+		return m_pitch;
+	}
+	
+	public void setStrength(int strength)
+	{
+		m_strength = strength;
+	}
+	
+	public int getStrength()
+	{
+		return m_strength;
+	}
+	
+	public void setStartTime(int startTime)
+	{
+		m_startTime = startTime;
+	}
+	
+	public long getStartTime()
+	{
+		return m_startTime;
+	}
+}
