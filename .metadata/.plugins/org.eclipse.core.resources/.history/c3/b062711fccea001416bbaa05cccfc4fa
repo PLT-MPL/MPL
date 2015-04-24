@@ -86,12 +86,13 @@ public class PublicFunction {
 			List<Note> notelist = melody.getNoteList();
 			//int tempo = 120; 
 			for(Note note: notelist){
-				int pitch = note.getPitch();
-				long duration = note.getDuration();
-				long starttime = note.getStartTime();
-				int strength = note.getStrength();
+				 int pitch = note.getPitch();
+				 long duration = note.getDuration();
+				 long starttime = note.getStartTime();
+				 int strength = note.getStrength();
 				 
 				miditrack.insertNote(channel,pitch,strength,starttime,duration);
+				
 			 }
 			 channel++;
 			 midiTrackList.add(miditrack);
@@ -101,6 +102,7 @@ public class PublicFunction {
        MidiFile midi = new MidiFile(MidiFile.DEFAULT_RESOLUTION, midiTrackList);
 
        // 4. Write the MIDI data to a file
+       
        File output = new File(outputpath);
        try {
            midi.writeToFile(output);

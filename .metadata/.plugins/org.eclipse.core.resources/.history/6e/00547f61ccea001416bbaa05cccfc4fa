@@ -94,7 +94,7 @@ public class Melody {
 		
 		int listSize = m_noteList.size();
 		Note lastNote = m_noteList.get(listSize-1);
-		long startTime = lastNote.getStartTime() + lastNote.getDuration();
+		int startTime = lastNote.getStartTime() + lastNote.getDuration();
 		
 		for(Note note: noteLists)
 		{

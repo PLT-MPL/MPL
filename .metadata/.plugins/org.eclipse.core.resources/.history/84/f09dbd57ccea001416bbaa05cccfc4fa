@@ -50,7 +50,7 @@ public class Music {
 	public void addMusic(Music music)// music played later
 	{
 		List<Track> trackLists = music.getTracks();
-		long maxEndTime = getTimeLength();
+		int maxEndTime = getTimeLength();
 		
 		for(Track track : trackLists)
 		{
@@ -62,7 +62,7 @@ public class Music {
 			if(noteLists == null)
 				throw new NullPointerException();
 			
-			long startTime = maxEndTime;
+			int startTime = maxEndTime;
 			for(Note note: noteLists)
 			{
 				note.setStartTime(startTime);

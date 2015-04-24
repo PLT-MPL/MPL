@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
@@ -70,45 +69,6 @@ public class PublicFunction {
 	
 	public static void write(Music music, String outputpath){
 		
-		MidiTrack tempoTrack = new MidiTrack();
-
-        List<Track> tracklist = music.getTracks();
-		int channel = 1;
-		ArrayList<MidiTrack> midiTrackList = new ArrayList<MidiTrack>();
-		midiTrackList.add(tempoTrack);
-		for(Track track: tracklist){
-			MidiTrack miditrack = new MidiTrack();
-			int timbre = track.getTimbre();
-			MidiEvent midievent = new ProgramChange(0, channel, timbre);
-			miditrack.insertEvent(midievent);
-			 
-			Melody melody = track.getMelody();
-			List<Note> notelist = melody.getNoteList();
-			//int tempo = 120; 
-			for(Note note: notelist){
-				int pitch = note.getPitch();
-				long duration = note.getDuration();
-				long starttime = note.getStartTime();
-				int strength = note.getStrength();
-				 
-				miditrack.insertNote(channel,pitch,strength,starttime,duration);
-			 }
-			 channel++;
-			 midiTrackList.add(miditrack);
-		 }
-		
-
-       MidiFile midi = new MidiFile(MidiFile.DEFAULT_RESOLUTION, midiTrackList);
-
-       // 4. Write the MIDI data to a file
-       File output = new File(outputpath);
-       try {
-           midi.writeToFile(output);
-       }
-       catch(IOException e) {
-           System.err.println(e);
-       }
-       System.out.println("haha");
 	}
 	
 	public static void print(String str){
