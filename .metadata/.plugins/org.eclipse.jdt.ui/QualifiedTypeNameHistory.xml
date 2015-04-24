@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="definition.Music"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.leff.midi.MidiFile"/>
+<fullyQualifiedTypeName name="com.leff.midi.event.meta.TimeSignature"/>
+<fullyQualifiedTypeName name="com.leff.midi.event.meta.Tempo"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="com.leff.midi.event.NoteOn"/>
+<fullyQualifiedTypeName name="com.leff.midi.event.NoteOff"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="com.leff.midi.event.MidiEvent"/>
 </qualifiedTypeNameHistroy>
