@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="definition.Music"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="com.leff.midi.MidiFile"/>
 <fullyQualifiedTypeName name="com.leff.midi.event.meta.TimeSignature"/>
 <fullyQualifiedTypeName name="com.leff.midi.event.meta.Tempo"/>
@@ -12,4 +11,9 @@
 <fullyQualifiedTypeName name="com.leff.midi.event.NoteOff"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="com.leff.midi.event.MidiEvent"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.leff.midi.event.ProgramChange"/>
+<fullyQualifiedTypeName name="function.PublicFunction"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

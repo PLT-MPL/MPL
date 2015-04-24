@@ -125,7 +125,7 @@ public class PublicFunction {
             System.err.println(e);
         }
         System.out.println("haha");
-
+=======
 		MidiTrack tempoTrack = new MidiTrack();
 
         List<Track> tracklist = music.getTracks();

@@ -73,7 +73,8 @@ public class PublicFunction {
 	}
 	
 	public static void write(Music music, String outputpath){
-
+		
+<<<<<<< HEAD
 		 MidiTrack tempoTrack = new MidiTrack();
 		 TimeSignature ts = new TimeSignature();// ?
          ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
@@ -101,8 +102,8 @@ public class PublicFunction {
  			 for(Note note: notelist)
  			 {
  				 int pitch = note.getPitch();
- 				 long duration = note.getDuration();
- 				 long starttime = note.getStartTime();
+ 				 int duration = note.getDuration();
+ 				 int starttime = note.getStartTime();
  				 int strength = note.getStrength();
  				 
  				miditrack.insertNote(channel,pitch,strength,starttime,duration);
@@ -125,7 +126,7 @@ public class PublicFunction {
             System.err.println(e);
         }
         System.out.println("haha");
-
+=======
 		MidiTrack tempoTrack = new MidiTrack();
 
         List<Track> tracklist = music.getTracks();
