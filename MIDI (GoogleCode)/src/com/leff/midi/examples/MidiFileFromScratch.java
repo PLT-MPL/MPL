@@ -15,8 +15,6 @@ public class MidiFileFromScratch
 {
     public static void main(String[] args)
     {
-    	System.out.println("asdsadsad");
-    	
         // 1. Create some MidiTracks
         MidiTrack tempoTrack = new MidiTrack();
         MidiTrack noteTrack = new MidiTrack();
@@ -56,7 +54,6 @@ public class MidiFileFromScratch
         File output = new File("exampleout.mid");
         try
         {
-        	System.out.println("asdsadsad");
             midi.writeToFile(output);
         }
         catch(IOException e)

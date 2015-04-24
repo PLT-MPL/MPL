@@ -1,0 +1,129 @@
+package test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import definition.*;
+
+import com.leff.midi.*;
+import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
+import com.leff.midi.event.NoteOn;
+import com.leff.midi.event.ProgramChange;
+import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.TimeSignature;
+
+public class test {
+
+	public static void createMidi(String fileName){
+        // 1. Create some MidiTracks
+		//        MidiTrack tempoTrack = new MidiTrack();
+        MidiTrack noteTrack = new MidiTrack();
+
+        // 2. Add events to the tracks
+        // 2b. Track 1 will have some notes in it
+        // channel, pitch, strength, startTime, duration
+        noteTrack.insertNote(0, 60, 100, 0, 500);
+        noteTrack.insertNote(0, 62, 100, 500, 500);
+        noteTrack.insertNote(0, 64, 100, 1000, 500);
+        noteTrack.insertNote(0, 65, 100, 1500, 500);
+        noteTrack.insertNote(0, 67, 100, 2000, 500);
+
+        MidiEvent pc1 = new ProgramChange(0, 1, 0);
+        noteTrack.insertEvent(pc1);
+        
+        // It's best not to manually insert EndOfTrack events; MidiTrack will
+        // call closeTrack() on itself before writing itself to a file
+
+        // 3. Create a MidiFile with the tracks we created
+        ArrayList<MidiTrack> tracks = new ArrayList<MidiTrack>();
+        tracks.add(noteTrack);
+        
+
+        
+        
+        MidiFile midi = new MidiFile(MidiFile.DEFAULT_RESOLUTION, tracks);
+
+        // 4. Write the MIDI data to a file
+        File output = new File(fileName);
+        try
+        {
+            midi.writeToFile(output);
+        }
+        catch(IOException e)
+        {
+            System.err.println(e);
+        }
+	}
+	
+	
+	public static void modifyMidi(String fileName){
+		// 1. Open up a MIDI file
+        MidiFile mf = null;
+        File input = new File(fileName);
+
+        try
+        {
+            mf = new MidiFile(input);
+        }
+        catch(IOException e)
+        {
+            System.err.println("Error parsing MIDI file:");
+            e.printStackTrace();
+            return;
+        }
+
+        // 2. Do some editing to the file
+        // 2a. Strip out anything but notes from track 1
+        MidiTrack T = mf.getTracks().get(0);
+        
+        
+        // It's a bad idea to modify a set while iterating, so we'll collect
+        // the events first, then remove them afterwards
+        Iterator<MidiEvent> it = T.getEvents().iterator();
+        ArrayList<MidiEvent> eventsToRemove = new ArrayList<MidiEvent>();
+
+        while(it.hasNext())
+        {
+        	
+            MidiEvent E = it.next();
+
+            if(E.getClass().equals(NoteOn.class))
+            {
+                NoteOn n = (NoteOn) E;
+                System.out.println("Channel: " + n.getChannel());
+                System.out.println("Tick: " + n.getTick());
+                System.out.println("Value: " + n.getNoteValue());
+                System.out.println("Velocity: " + n.getVelocity());
+                System.out.println("Type: " + n.getType());
+                System.out.println();
+            }
+        }
+
+        for(MidiEvent E : eventsToRemove)
+        {
+            T.removeEvent(E);
+        }
+
+
+        // 3. Save the file back to disk
+        try
+        {
+            mf.writeToFile(input);
+        }
+        catch(IOException e)
+        {
+            System.err.println("Error writing MIDI file:");
+            e.printStackTrace();
+        }
+	}
+	
+	public static void main(String[] args) {
+		createMidi("out.mid");
+		modifyMidi("out.mid");
+        
+        System.out.println("Done...");
+	}
+}
