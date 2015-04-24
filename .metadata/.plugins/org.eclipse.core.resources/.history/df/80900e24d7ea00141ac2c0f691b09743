@@ -184,7 +184,7 @@ public class test {
 		Music music = new Music(tracks);
 		
 		//8. write(music, ¡°~/Desktop/twinkle_twinkle.midi¡±);
-		PublicFunction.write(music, "twinkle_twinkle.midi");
+		PublicFunction.write(music, "~/Desktop/twinkle_twinkle.midi");
 		
         System.out.println("Done...");
 	}
