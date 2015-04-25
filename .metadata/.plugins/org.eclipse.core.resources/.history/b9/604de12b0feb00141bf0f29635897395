@@ -1,0 +1,145 @@
+package function;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.leff.midi.MidiFile;
+import com.leff.midi.MidiTrack;
+import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
+import com.leff.midi.event.NoteOn;
+import com.leff.midi.event.ProgramChange;
+
+import definition.*;
+
+public class PublicFunction {
+	public static void setNoteDefault(int pitch, int startTime,
+			int duration, int strength){
+		
+		C.NOTE_DEFAULT_PITCH = pitch;
+		C.NOTE_DEFAULT_STARTTIME = startTime;
+		C.NOTE_DEFAULT_DURATION = duration;
+		C.NOTE_DEFAULT_STRENGTH = strength;
+	}
+	
+	public static int changeToMillisecond(int minute, int second,
+			int millisecond){
+		return minute*60*1000 + second*1000 + millisecond;
+	}
+	
+	public static void printTime(int millisecond){
+		int ms = millisecond % 1000;
+		millisecond /= 1000;
+		int s = millisecond % 60;
+		millisecond /= 60;
+		int min = millisecond;
+		System.out.println(min+"/"+s+"/"+ms);
+	}
+	
+	public static Music read(String path){
+		System.out.println("\n/********read*******/");
+		// 1. Open up a MIDI file
+        MidiFile mf = null;
+        File input = new File(path);
+
+        try{
+            mf = new MidiFile(input);
+        } catch(IOException e){
+            System.err.println("Error parsing MIDI file:");
+            e.printStackTrace();
+            return null;
+        }
+        
+        
+        Music mus = new Music();
+        for(int i = 0; i < mf.getTrackCount(); i++){
+        	MidiTrack T = mf.getTracks().get(i);
+        	Iterator<MidiEvent> it = T.getEvents().iterator();
+        	
+        	
+        	Melody mel = new Melody();
+        	int timbre = -1;
+        	while(it.hasNext()){
+                MidiEvent E = it.next();
+                if(E.getClass().equals(ProgramChange.class)){
+                	ProgramChange p = (ProgramChange) E;
+                	timbre = p.getProgramNumber();
+                }
+                if(E.getClass().equals(NoteOn.class)){
+                	NoteOn sn = (NoteOn) E;
+                	NoteOn en = (NoteOn) it.next();
+                    
+                    int pitch = sn.getNoteValue();
+                    long duration = en.getTick()-sn.getTick();
+                    long startTime = sn.getTick();
+                    int strength = sn.getVelocity();
+                    
+                    System.out.println(timbre + ", " + pitch + ", " + strength + ", " 
+    						+ startTime + ", " + duration);
+                    mel.addNote(new Note(pitch, duration, startTime, strength));
+                }
+            }
+        	Track tra = new Track(mel, timbre);
+        	mus.insertTrack(tra);
+        }
+        
+		return mus;
+	}
+	
+	public static void write(Music music, String outputpath){
+		
+		System.out.println("\n/********write*******/");
+		
+		MidiTrack tempoTrack = new MidiTrack();
+
+        List<Track> tracklist = music.getTracks();
+		int channel = 1;
+		ArrayList<MidiTrack> midiTrackList = new ArrayList<MidiTrack>();
+		midiTrackList.add(tempoTrack);
+		for(Track track: tracklist){
+			MidiTrack miditrack = new MidiTrack();
+			int timbre = track.getTimbre();
+			MidiEvent midievent = new ProgramChange(0, channel, timbre);
+			miditrack.insertEvent(midievent);
+			 
+			Melody melody = track.getMelody();
+			List<Note> notelist = melody.getNoteList();
+			//int tempo = 120; 
+			for(Note note: notelist){
+				int pitch = note.getPitch();
+				long duration = note.getDuration();
+				long startTime = note.getStartTime();
+				int strength = note.getStrength();
+				System.out.println(channel + ", " + pitch + ", " + strength + ", " 
+						+ startTime + ", " + duration);
+				miditrack.insertNote(channel,pitch,strength,startTime,duration);
+			 }
+			 channel++;
+			 midiTrackList.add(miditrack);
+		 }
+		
+
+       MidiFile midi = new MidiFile(MidiFile.DEFAULT_RESOLUTION, midiTrackList);
+
+       // 4. Write the MIDI data to a file
+       File output = new File(outputpath);
+       try {
+           midi.writeToFile(output);
+       }
+       catch(IOException e) {
+           System.err.println(e);
+       }
+       // System.out.println("haha");
+	}
+	
+	public static void print(String str){        
+		System.out.print(str);
+	}
+	
+	public static int sizeof(Note notes[]){
+		return notes.length;
+	}
+}
