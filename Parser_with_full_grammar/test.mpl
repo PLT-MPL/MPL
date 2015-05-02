@@ -3,11 +3,11 @@ void main(int arg[]){
 	Music music = read(path, 2);
 	Track tracks[] = music.getTracks();
 	Note notes1[] = {Note(), Note(F4), Note(E4), Note(D4)};
-	Melody melody0(notes0);
+	Melody melody0 = Melody(notes0);
 
 	int a;
 	tracks[3] += music.getTracks();
-	Melody melody0();
+	Melody melody0 = Note();
 	for(; i < 3; i++)
 		return;
 	if(1)
@@ -17,7 +17,7 @@ void main(int arg[]){
 			}
 		}
 		else {
-eeeee = eee;
+		eeeee = eee;
 	} 
 	else {
 		test();

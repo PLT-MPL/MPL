@@ -115,10 +115,10 @@ initializer_list:
 	| initializer_list COM init 	{ $1 ^ "," ^ $3 }
 
 declarator_list:
-	declarator							{ $1 }
-	| declarator ASS init				{ $1 ^ "=" ^ $3 }
-	| declarator_list COM declarator	{ $1 ^ "," ^ $3 }
-	| declarator_list COM declarator ASS init	{ $1 ^ "," ^ $3 ^ "=" ^ $5 }
+	val_declarator							{ $1 }
+	| val_declarator ASS init				{ $1 ^ "=" ^ $3 }
+	| declarator_list COM val_declarator	{ $1 ^ "," ^ $3 }
+	| declarator_list COM val_declarator ASS init	{ $1 ^ "," ^ $3 ^ "=" ^ $5 }
 
 other_statement:
 	IF LPA expr RPA statement 					{ "IF " ^ $3 ^ " THEN \n\t" ^ $5 }
@@ -138,20 +138,21 @@ statement_list:
 	| statement_list statement 	{ $1 ^ "\n" ^ $2 }
 
 function_definition:
-	DATATYPE declarator LBRE statement_list RBRE 	{ $1 ^ " " ^ $2 ^ " {\n" ^ $4 ^"\n}\n"}
+	DATATYPE func_declarator LBRE statement_list RBRE 	{ $1 ^ " " ^ $2 ^ " {\n" ^ $4 ^"\n}\n"}
 
-declarator:
+val_declarator:
 	ID 								{ $1 }
-	| declarator LBRK or_expr RBRK	{ $1 ^ "[ " ^ $3 ^ " ]" }
-	| declarator LBRK RBRK			{ $1 ^ "[ ]" }
-	| declarator LPA para_list RPA	{ $1 ^ "( " ^ $3 ^ " )" }
-	| declarator LPA type_list RPA	{ $1 ^ "( " ^ $3 ^ " )" }
-	| declarator LPA arg_expr_list RPA	{ $1 ^ "( " ^ $3 ^ " )" }
-	| declarator LPA RPA			{ $1 ^ "( )" }
+	| val_declarator LBRK or_expr RBRK	{ $1 ^ "[ " ^ $3 ^ " ]" }
+	| val_declarator LBRK RBRK			{ $1 ^ "[ ]" }
+
+func_declarator:
+	ID LPA para_list RPA	{ $1 ^ "( " ^ $3 ^ " )" }
+	| ID LPA type_list RPA	{ $1 ^ "( " ^ $3 ^ " )" }
+	| ID LPA RPA			{ $1 ^ "( )" }
 
 para_list:
-	DATATYPE declarator 				{ $1 ^ " " ^ $2 }
-	| para_list COM DATATYPE declarator { $1 ^ ", " ^ $3 ^ " " ^ $4 }
+	DATATYPE val_declarator 				{ $1 ^ " " ^ $2 }
+	| para_list COM DATATYPE val_declarator { $1 ^ ", " ^ $3 ^ " " ^ $4 }
 
 type_list:
 	DATATYPE					{ $1 }
