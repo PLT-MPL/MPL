@@ -27,9 +27,9 @@ let rec string_of_expr env expr =
 		let typeE1 = check_expr env e1 in
 		let typeE2 = check_expr env e2 in
 		match (typeE1,typeE2) with
-		| ("Melody","Melody") -> "PublicFunction.multipleMelody("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
-		| ("Music","Music") -> "PublicFunction.multipleMusic("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
-		| ("Melody","int") | ("int","Melody") -> "PublicFunction.multipleInt"^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Melody","Melody") -> "PublicFunction.multiplyMelody("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Music","Music") -> "PublicFunction.multiplyMusic("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Melody","int") | ("int","Melody") -> "PublicFunction.multiplyInt("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
 		| _ -> "(" ^ string_of_expr env e1 ^ ")" ^ " * " ^ "(" ^ string_of_expr env e2 ^ ")"
 	)
 
@@ -50,7 +50,7 @@ let rec string_of_expr env expr =
 		let typeE1 = check_expr env e1 in
 		let typeE2 = check_expr env e2 in
 		match (typeE1,typeE2) with
-		| ("Note","int") -> "PublicFunction.minus" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Note","int") -> "PublicFunction.minus(" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
 		| _ -> string_of_expr env e1 ^ " - " ^ string_of_expr env e2
 	)
 	
@@ -92,16 +92,20 @@ let rec string_of_expr env expr =
 				let typeE1 = check_expr env e1 in
 				let typeE3 = check_expr env e3 in
 				(match (typeE1, typeE3) with
-					("Melody", "Melody") -> string_of_expr env e1 ^ "." ^ "multipleMelody(" ^ string_of_expr env e3 ^ ")"
-					| ("Music", "Music") -> string_of_expr env e1 ^ "." ^ "multipleMusic(" ^ string_of_expr env e3 ^ ")"
-					| ("Melody", "int") -> string_of_expr env e1 ^ "." ^ "multipleInt(" ^ string_of_expr env e3 ^ ")"
+					("Melody", "Melody") -> string_of_expr env e1 ^ "." ^ "multiplyMelody(" ^ string_of_expr env e3 ^ ")"
+					| ("Music", "Music") -> string_of_expr env e1 ^ "." ^ "multiplyMusic(" ^ string_of_expr env e3 ^ ")"
+					| ("Melody", "int") -> string_of_expr env e1 ^ "." ^ "multiplyInt(" ^ string_of_expr env e3 ^ ")"
 					| _ -> string_of_expr env e1 ^ " *= " ^ string_of_expr env e3
 				)
 			| ASS -> string_of_expr env e1 ^ " = " ^ string_of_expr env e3
 
 	)
 	| Paren_Expr(e1) -> string_of_expr env e1
-	| Array(e1,e2) -> string_of_expr env e1 ^ "[" ^ string_of_expr env e2 ^ "]"(* a[4] *)
+	| Array(e1,e2) -> 
+		let typeE = check_expr env e1 in
+		if ((typeE = "array_Track") || (typeE = "array_Note")) then
+			string_of_expr env e1 ^ ".get(" ^ string_of_expr env e2 ^ ")"
+		else string_of_expr env e1 ^ "[" ^ string_of_expr env e2 ^ "]"
 	| Func_Call(e1,Some(a)) -> 
 		let stringE = string_of_expr env e1 in
 		(match stringE with
@@ -111,7 +115,7 @@ let rec string_of_expr env expr =
 			| "setNoteDefault" -> "PublicFunction.setNoteDefault(" ^ String.concat ", " (List.rev_map (string_of_expr env) a) ^ ")"
 			| "changeToMillisecond" -> "PublicFunction.changeToMillisecond("^ String.concat ", " (List.rev_map (string_of_expr env) a) ^ ")"
 			| "printTime" -> "PublicFunction.printTime("^ String.concat ", " (List.rev_map (string_of_expr env) a) ^ ")"
-			| "sizeOf" -> "PublicFunction.sizeOf"^ String.concat ", " (List.rev_map (string_of_expr env) a) ^ ")"
+			| "sizeOf" -> "PublicFunction.sizeOf("^ String.concat ", " (List.rev_map (string_of_expr env) a) ^ ")"
 			| _ -> string_of_expr env e1 ^ "(" ^ String.concat ", "(List.rev_map (string_of_expr env) a) ^ ")" (* linkdown(ip,port)*)
 		)
 		
@@ -163,7 +167,13 @@ let rec string_of_dec_list env flag decl =
 			(string_of_val_declarator env v) ^ " = " ^ string_of_init env i
 
 	| Dec_list(d,v) -> string_of_dec_list env flag d ^ ", " ^ string_of_val_declarator env v
-	| Assign_list(d,v,i) -> string_of_dec_list env flag d ^ ", " ^ string_of_val_declarator env v ^ " = " ^ string_of_init env i
+	| Assign_list(d,v,i) -> 
+		if flag then 
+			let name = find_name v in
+			string_of_dec_list env flag d ^ ", " ^ name ^ " = " ^ string_of_init env i
+		else
+			string_of_dec_list env flag d ^ ", " ^ string_of_val_declarator env v ^ " = " ^ string_of_init env i
+		
 
 
 
