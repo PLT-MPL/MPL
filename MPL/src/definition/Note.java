@@ -1,5 +1,5 @@
 package definition;
-
+import java.util.*;
 public class Note {
 	
 	private int m_pitch;
@@ -96,6 +96,15 @@ public class Note {
 	public long getStartTime()
 	{
 		return m_startTime;
+	}
+	
+	public Note plus(int val){
+		return new Note(m_pitch+val, m_duration, m_startTime, m_strength);
+	}
+	
+	public Note minus(int val){
+
+		return new Note(m_pitch-val, m_duration, m_startTime, m_strength);
 	}
 
 }

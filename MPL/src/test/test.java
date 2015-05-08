@@ -21,9 +21,6 @@ import com.leff.midi.event.meta.TimeSignature;
 public class test {
 	
 	public static void main(String[] args) {
-		//createMidi("out.mid");
-		//modifyMidi("out.mid");
-        
 		Note n = new Note();
 		// n = n + 1
 		n = PublicFunction.plus(n,1);

@@ -87,5 +87,47 @@ public class Melody {
 		return maxEnd;
 	}
 	
+	//melody  = melody + melody
+	public void addMelody(Melody melody_2)
+	{
+		List<Note> noteList_2 = melody_2.getNoteList();
+		
+		if((noteList_2 == null) ||  (m_noteList == null))
+			throw new NullPointerException();
+		
+		int listSize = m_noteList.size();
+		Note lastNote = m_noteList.get(listSize-1);
+		long startTime = lastNote.getStartTime() + lastNote.getDuration();
+		
+		for(Note note: noteList_2)
+		{
+			note.setStartTime(startTime);
+			startTime = startTime + note.getDuration();
+		}
+		m_noteList.addAll(noteList_2);
+	}
+		
+	//multiplyMelody
+	public void multiplyMelody(Melody melody_2)
+	{
+		List<Note> noteList_2 = melody_2.getNoteList();
+		
+		if((m_noteList == null) || (noteList_2 == null))
+			throw new NullPointerException();
+		
+		m_noteList.addAll(noteList_2);
+	}
+	
+	//multiplyInt
+	public void multiplyInt(int time){
+		 Melody newMelody = new Melody(m_noteList);
+		 for(int i=0;i<time;i++){
+			 this.addMelody(newMelody);
+		 }
+	}
+	
+	
+
+	
 }
 

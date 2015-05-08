@@ -46,4 +46,57 @@ public class Music {
 		return maxTimeLength;
 	}
 	
+	public void addMusic(Music music)// music played later
+	{
+		List<Track> trackList = music.getTracks();
+
+		if(trackList == null) 
+				throw new NullPointerException();
+
+		long maxEndTime = getTimeLength();
+		
+		for(Track track : trackList)
+		{
+			Melody melody = track.getMelody();
+			if(melody == null)
+				throw new NullPointerException();
+			
+			List<Note> noteLists = melody.getNoteList();
+			if(noteLists == null)
+				throw new NullPointerException();
+			
+			long startTime = maxEndTime;
+			for(Note note: noteLists)
+			{
+				note.setStartTime(startTime);
+				startTime = startTime + note.getDuration();
+			}
+			melody.setNoteList(noteLists);
+			track.setMelody(melody);
+		}
+		m_trackList.addAll(trackList);
+		
+	}
+	
+	public void multiplyMusic(Music music)
+	{
+		List<Track> trackList = music.getTracks();
+
+		if((trackList == null) )
+				throw new NullPointerException();
+		
+		for(Track track : trackList)
+		{
+			Melody melody = track.getMelody();
+			if(melody == null)
+				throw new NullPointerException();
+			
+			List<Note> noteLists = melody.getNoteList();
+			if(noteLists == null)
+				throw new NullPointerException();
+		
+		}
+		m_trackList.addAll(trackList);
+	}
+	
 }
