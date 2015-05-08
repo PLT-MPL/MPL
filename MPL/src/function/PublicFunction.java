@@ -53,7 +53,6 @@ public class PublicFunction {
             return null;
         }
         
-        
         Music mus = new Music();
         // System.out.println(mf.getTrackCount());
         for(int i = 0; i < mf.getTrackCount(); i++){
@@ -139,4 +138,191 @@ public class PublicFunction {
 	public static int sizeof(Note notes[]){
 		return notes.length;
 	}
+
+	// note = note + 2
+	public static Note plus(Note note, int val){
+		int pitch = note.getPitch();
+		long duration = note.getDuration();
+		long startTime = note.getStartTime();
+		int strength = note.getStrength();
+
+		return new Note(pitch+val, duration, startTime, strength);
+	}
+
+	// note = 2 + note
+	public static Note plus(int val, Note note){
+		int pitch = note.getPitch();
+		long duration = note.getDuration();
+		long startTime = note.getStartTime();
+		int strength = note.getStrength();
+
+		return new Note(pitch+val, duration, startTime, strength);
+	}
+	
+	// note = note - 2
+	public static Note minus(Note note, int val){
+		int pitch = note.getPitch();
+		long duration = note.getDuration();
+		long startTime = note.getStartTime();
+		int strength = note.getStrength();
+
+		return new Note(pitch-val, duration, startTime, strength);
+	}
+
+	//melody  = melody + melody
+	public static Melody addMelody(Melody melody_1, Melody melody_2)
+	{
+		List<Note> noteList_2 = melody_2.getNoteList();
+		List<Note> noteList_1 = melody_1.getNoteList();
+		if((noteList_2 == null) ||  (noteList_1 == null))
+			throw new NullPointerException();
+		
+		int listSize = noteList_1.size();
+		Note lastNote = noteList_1.get(listSize-1);
+		long startTime = lastNote.getStartTime() + lastNote.getDuration();
+		
+		for(Note note: noteList_2)
+		{
+			note.setStartTime(startTime);
+			startTime = startTime + note.getDuration();
+		}
+		noteList_1.addAll(noteList_2);
+
+		melody_1.setNoteList(noteList_1);
+		return melody_1;
+	}
+	
+	//melody  = melody * melody
+	public static Melody multipleMelody(Melody melody_1, Melody melody_2)
+	{
+		List<Note> noteList_1 = melody_1.getNoteList();
+		if(noteList_1 == null)
+			throw new NullPointerException();
+		
+		List<Note> noteList_2 = melody_2.getNoteList();
+		if(noteList_2 == null)
+			throw new NullPointerException();
+
+		noteList_1.addAll(noteList_2);
+		melody_1.setNoteList(noteList_1);
+		return melody_1;
+	}
+
+	//melody  = melody + note
+	public static Melody addNote(Melody melody, Note note){
+		
+		List<Note> noteList = melody.getNoteList();
+		if(noteList == null)
+			noteList = new ArrayList<Note>();
+		
+		noteList.add(note);
+		melody.setNoteList(noteList);
+
+		return melody;
+	}
+
+	//melody  = note + melody
+	public static Melody addNote(Note note, Melody melody){
+	
+		List<Note> noteList = melody.getNoteList();
+		if(noteList == null)
+			noteList = new ArrayList<Note>();
+		
+		noteList.add(note);
+		melody.setNoteList(noteList);
+
+		return melody;
+	}
+
+	//melody = melody * 3
+	public static Melody multipleInt(Melody melody, int time){
+
+		List<Note> noteList = melody.getNoteList();
+		if(noteList == null)
+			noteList = new ArrayList<Note>();
+		
+		
+		List<Note> newList = new ArrayList<Note>();
+		for(int i=0;i<time;i++){
+			newList.addAll(noteList);
+		}
+
+		melody.setNoteList(newList);
+		return melody;
+	}
+
+	//melody = 3 *  melody
+	public static Melody multipleInt(int time, Melody melody){
+	
+        Melody newMelody = new Melody();
+		for(int i=0;i<time;i++){
+			newMelody = addMelody(newMelody,melody);
+		}
+		return melody;
+	}
+
+	// music = music + music
+	public static Music addMusic(Music music_1, Music music_2)// music played later
+	{
+		List<Track> trackList_2 = music_2.getTracks();
+		List<Track> trackList_1 = music_1.getTracks();
+
+		if((trackList_1 == null) || (trackList_2 == null))
+				throw new NullPointerException();
+
+		long maxEndTime = music_1.getTimeLength();
+		
+		for(Track track : trackList_2)
+		{
+			Melody melody = track.getMelody();
+			if(melody == null)
+				throw new NullPointerException();
+			
+			List<Note> noteLists = melody.getNoteList();
+			if(noteLists == null)
+				throw new NullPointerException();
+			
+			long startTime = maxEndTime;
+			for(Note note: noteLists)
+			{
+				note.setStartTime(startTime);
+				startTime = startTime + note.getDuration();
+			}
+			melody.setNoteList(noteLists);
+			track.setMelody(melody);
+		}
+		trackList_1.addAll(trackList_2);
+
+		Music newMusic = new Music(trackList_1);
+
+		return newMusic;
+		
+	}
+	
+	// music = music * music
+	public static Music multipleMusic(Music music_1, Music music_2)
+	{
+		List<Track> trackList_1 = music_1.getTracks();
+		List<Track> trackList_2 = music_2.getTracks();
+
+		if((trackList_1 == null) || (trackList_2 == null))
+				throw new NullPointerException();
+		
+		for(Track track : trackList_2)
+		{
+			Melody melody = track.getMelody();
+			if(melody == null)
+				throw new NullPointerException();
+			
+			List<Note> noteLists = melody.getNoteList();
+			if(noteLists == null)
+				throw new NullPointerException();
+		
+		}
+		trackList_1.addAll(trackList_2);
+
+		Music newMusic = new Music(trackList_1);
+		return newMusic;
+	}
+
 }

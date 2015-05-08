@@ -17,8 +17,8 @@ let base_table =
 	Hashtbl.add table "Note_getStrength" "Note_void_int";
 	
 	Hashtbl.add table "Melody_subMelody" "Melody_int_int_Melody";
-	Hashtbl.add table "Melody_addNote" "Melody_Note_void";
-	Hashtbl.add table "Melody_deleteNote" "Melody_int_void";
+	Hashtbl.add table "Melody_addNote" "Melody_Note_Melody";
+	Hashtbl.add table "Melody_deleteNote" "Melody_int_Melody";
 	Hashtbl.add table "Melody_getNote" "Melody_int_Note";
 	Hashtbl.add table "Melody_getNotes" "Melody_void_array_Note";
 	Hashtbl.add table "Melody_getLength" "Melody_void_int";
