@@ -20,7 +20,7 @@ let base_table =
 	Hashtbl.add table "Melody_addNote" "Melody_Note_void";
 	Hashtbl.add table "Melody_deleteNote" "Melody_int_void";
 	Hashtbl.add table "Melody_getNote" "Melody_int_Note";
-	Hashtbl.add table "Melody_getNotes" "Melody_void_array";
+	Hashtbl.add table "Melody_getNotes" "Melody_void_array_Note";
 	Hashtbl.add table "Melody_getLength" "Melody_void_int";
 	Hashtbl.add table "Melody_getTimeLength" "Melody_void_int";
 
@@ -30,7 +30,7 @@ let base_table =
 	Hashtbl.add table "Track_getLength" "Track_void_int";
 
 	Hashtbl.add table "Music_getTrack" "Music_int_Track";
-	Hashtbl.add table "Music_getTracks" "Music_void_array";
+	Hashtbl.add table "Music_getTracks" "Music_void_array_Track";
 	Hashtbl.add table "Music_getNumberOfTracks" "Music_void_int";
 	Hashtbl.add table "Music_getTimeLength" "Music_void_int";
 
