@@ -99,13 +99,15 @@ public class Melody {
 		int listSize = m_noteList.size();
 		Note lastNote = m_noteList.get(listSize-1);
 		long startTime = lastNote.getStartTime() + lastNote.getDuration();
-		
+		 
 		for(Note note: noteList_2)
 		{
-			note.setStartTime(startTime);
+			Note newNote = new Note(note);
+			newNote.setStartTime(startTime);
+			m_noteList.add(newNote);
 			startTime = startTime + note.getDuration();
 		}
-		m_noteList.addAll(noteList_2);
+		
 	}
 		
 	//multiplyMelody
@@ -120,13 +122,14 @@ public class Melody {
 	}
 	
 	//multiplyInt
-	public Melody multiplyInt(int time){
-		
+	public void multiplyInt(int time){
         Melody newMelody = new Melody(this);
-		for(int i=0;i<time;i++){
-			newMelody = PublicFunction.addMelody(newMelody,this);
+       
+		for(int i=0;i<time-1;i++){
+			addMelody(newMelody);
+				
 		}
-		return newMelody;
+		
 	}
 	
 	

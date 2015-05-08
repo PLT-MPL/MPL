@@ -16,8 +16,8 @@ import com.leff.midi.event.ProgramChange;
 import definition.*;
 
 public class PublicFunction {
-	public static void setNoteDefault(int pitch, int duration, 
-			int startTime, int strength){
+	public static void setNoteDefault(int pitch, int startTime,
+			int duration, int strength){
 		
 		C.NOTE_DEFAULT_PITCH = pitch;
 		C.NOTE_DEFAULT_STARTTIME = startTime;
@@ -268,7 +268,7 @@ public class PublicFunction {
 	public static Melody multiplyInt(Melody melody, int time){
 
 		 Melody newMelody = new Melody(melody);
-			for(int i=0;i<time;i++){
+			for(int i=0;i<time-1;i++){
 				System.out.println(newMelody.getLength());
 				newMelody = addMelody(newMelody,melody);
 			}

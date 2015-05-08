@@ -41,11 +41,7 @@ public class testMelody {
 			PublicFunction.write(music, "test_addMelody_public.mid");
 		}
 		else if(testcase == 2){
-<<<<<<< Updated upstream
-			//2) test multipleMelody in PublicFunction
-=======
 			//2) test multiplyMelody in PublicFunction
->>>>>>> Stashed changes
 			newMelody = PublicFunction.multiplyMelody(melody, melody2);
 			track = new Track(newMelody,C.PIANO);
 			music = new Music();
@@ -61,11 +57,7 @@ public class testMelody {
 			PublicFunction.write(music, "test_addNote_public.mid");
 		}
 		else if(testcase == 4){
-<<<<<<< Updated upstream
-			//4) test multipleInt in PublicFunction
-=======
 			//4) test multiplyInt in PublicFunction
->>>>>>> Stashed changes
 			newMelody = PublicFunction.multiplyInt(melody2, 3);
 			track = new Track(newMelody,C.PIANO);
 			music = new Music();
@@ -102,7 +94,6 @@ public class testMelody {
 			melody.multiplyInt(3);
 			track = new Track(melody,C.PIANO);
 			music = new Music();
-			System.out.println(melody.getLength());
 			music.insertTrack(track);
 			PublicFunction.write(music, "test_multiplyInt.mid");
 		}
@@ -126,6 +117,6 @@ public class testMelody {
 	
 	public static void main(String[] args){
 		
-		testMelody test = new testMelody(8);
+		testMelody test = new testMelody(4);
 	}
 }

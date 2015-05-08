@@ -88,7 +88,7 @@ public class testMusic {
 	
 	public static void main(String[] args){
 			
-		testMusic test = new testMusic(3);
+		testMusic test = new testMusic(4);
 	}
 
 }
