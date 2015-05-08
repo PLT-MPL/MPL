@@ -1,7 +1,7 @@
 
-double fun(int a, double b) {
+int fun(int a, double b) {
 	int d;
-	return b;
+	return d;
 }
 
 void main(int arg[]) {
@@ -13,11 +13,11 @@ void main(int arg[]) {
 	Melody melody0 = Melody();
 	notes1.setDuration(1);
 	
-	double i;
-	i = 1.1 + fun(1, 2.);
+	int i;
+	i = 1 + fun(1, 2.);
 	melody0 *= 2;
 
-	for(; i < 3.0; i++) {
+	for(; i < 3; i++) {
 	return;
 	if(false) {
 

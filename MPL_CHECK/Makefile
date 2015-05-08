@@ -14,3 +14,5 @@ clean:
 	rm -rf *.cmo
 	rm -rf *.cmi
 	rm -rf *.mli
+	rm lexer.ml
+	rm parser.ml

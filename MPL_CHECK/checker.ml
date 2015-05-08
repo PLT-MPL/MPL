@@ -378,7 +378,16 @@ let base_table =
 	Hashtbl.add table "current_loop" "false";
 	Hashtbl.add table "current_function_type" "None";
 	Hashtbl.add table "Note" "int_int_int_int";
+	Hashtbl.add table "Melody" "array_Note";
+	Hashtbl.add table "Track" "Melody_int";
+	Hashtbl.add table "Music" "array_Track";
 	Hashtbl.add table "Note_setDuration" "Note_int_void";
+	Hashtbl.add table "Melody_subMelody" "Melody_int_int_Melody";
+	Hashtbl.add table "setNoteDefault" "void_int_int_int_int_void";
+	(* function_name: if called by note.func(): Type_funcname
+					  if general function:		funcname
+	   function_type: if called by note.func(): Type_argTypes_returnType
+					  if general function: 		void_argTypes_returnType *)
 	table
 
 let print key value =
