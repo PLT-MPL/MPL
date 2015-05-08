@@ -54,6 +54,7 @@ public class Melody {
 			m_noteList = new ArrayList<Note>();
 		
 		m_noteList.add(note);
+		
 	}
 	
 	public void deleteNote(int index){
@@ -86,31 +87,5 @@ public class Melody {
 		return maxEnd;
 	}
 	
-	public void addMelody(Melody melody)
-	{
-		List<Note> noteLists = melody.getNoteList();
-		if(noteLists == null)
-			throw new NullPointerException();
-		
-		int listSize = m_noteList.size();
-		Note lastNote = m_noteList.get(listSize-1);
-		long startTime = lastNote.getStartTime() + lastNote.getDuration();
-		
-		for(Note note: noteLists)
-		{
-			note.setStartTime(startTime);
-			startTime = startTime + note.getDuration();
-		}
-		m_noteList.addAll(noteLists);
-	}
-	
-	public void multipleMelody(Melody melody)
-	{
-		List<Note> noteLists = melody.getNoteList();
-		if(noteLists == null)
-			throw new NullPointerException();
-		
-		m_noteList.addAll(noteLists);
-	}
 }
 

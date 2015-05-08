@@ -26,9 +26,9 @@ public class test {
         
 		Note n = new Note();
 		// n = n + 1
-		n = n.plus(1);
+		n = PublicFunction.plus(n,1);
 		// n = n - 2
-		n = n.minus(2);
+		n = PublicFunction.minus(n,2);
 		
 		// 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - ||
 		PublicFunction.setNoteDefault(C.C4, 0, 250, 200); 

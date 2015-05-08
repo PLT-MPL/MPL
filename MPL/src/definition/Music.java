@@ -47,12 +47,17 @@ public class Music {
 	}
 	
 	
-	public void addMusic(Music music)// music played later
+	public static void addMusic(Music music_1, Music music_2)// music played later
 	{
-		List<Track> trackLists = music.getTracks();
-		long maxEndTime = getTimeLength();
+		List<Track> trackList_2 = music_2.getTracks();
+		List<Track> trackList_1 = music_1.getTracks();
+
+		if((trackList_1 == null) || (trackList_2 == null))
+				throw new NullPointerException();
+
+		long maxEndTime = music_1.getTimeLength();
 		
-		for(Track track : trackLists)
+		for(Track track : trackList_2)
 		{
 			Melody melody = track.getMelody();
 			if(melody == null)
@@ -71,15 +76,19 @@ public class Music {
 			melody.setNoteList(noteLists);
 			track.setMelody(melody);
 		}
-		m_trackList.addAll(trackLists);
+		trackList_1.addAll(trackList_2);
 		
 	}
 	
-	public void multipleMusic(Music music)
+	public static void multipleMusic(Music music_1, Music music_2)
 	{
-		List<Track> trackLists = music.getTracks();
+		List<Track> trackList_1 = music_1.getTracks();
+		List<Track> trackList_2 = music_2.getTracks();
+
+		if((trackList_1 == null) || (trackList_2 == null))
+				throw new NullPointerException();
 		
-		for(Track track : trackLists)
+		for(Track track : trackList_2)
 		{
 			Melody melody = track.getMelody();
 			if(melody == null)
@@ -90,6 +99,6 @@ public class Music {
 				throw new NullPointerException();
 		
 		}
-		m_trackList.addAll(trackLists);
+		trackList_1.addAll(trackList_2);
 	}
 }
