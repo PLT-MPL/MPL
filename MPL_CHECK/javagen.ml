@@ -27,22 +27,22 @@ let rec string_of_expr env expr =
 		let typeE1 = check_expr env e1 in
 		let typeE2 = check_expr env e2 in
 		match (typeE1,typeE2) with
-		| ("Melody","Melody") -> "PublicFunction.multipleMelody("^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| ("Music","Music") -> "PublicFunction.multipleMusic("^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| ("Melody","int") | ("int","Melody") -> "PublicFunction.multipleInt"^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| _ -> "(" ^ string_of_expr env e1 ^ ")" ^ "*" ^ "(" ^ string_of_expr env e2 ^ ")"
+		| ("Melody","Melody") -> "PublicFunction.multipleMelody("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Music","Music") -> "PublicFunction.multipleMusic("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Melody","int") | ("int","Melody") -> "PublicFunction.multipleInt"^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| _ -> "(" ^ string_of_expr env e1 ^ ")" ^ " * " ^ "(" ^ string_of_expr env e2 ^ ")"
 	)
 
 	| Add_Bin(e1,e2) -> (
 		let typeE1 = check_expr env e1 in
 		let typeE2 = check_expr env e2 in
 		match (typeE1,typeE2) with
-		| ("Melody","Melody") -> "PublicFunction.addMelody(" ^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| ("Music","Music") ->	"PublicFunction.addMusic(" ^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")" 
-		| ("Note","Note") -> "PublicFunction.addNote("^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| ("Note","int") | ("int","Note") -> "PublicFunction.plus(" ^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")" 
-		| ("Melody","Note") | ("Note", "Meldoy") -> "PublicFunction.addNote(" ^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| _ -> string_of_expr env e1 ^ "+" ^ string_of_expr env e2
+		| ("Melody","Melody") -> "PublicFunction.addMelody(" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Music","Music") ->	"PublicFunction.addMusic(" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")" 
+		| ("Note","Note") -> "PublicFunction.addNote("^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| ("Note","int") | ("int","Note") -> "PublicFunction.plus(" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")" 
+		| ("Melody","Note") | ("Note", "Meldoy") -> "PublicFunction.addNote(" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| _ -> string_of_expr env e1 ^ " + " ^ string_of_expr env e2
 	)
 	
 	
@@ -50,22 +50,22 @@ let rec string_of_expr env expr =
 		let typeE1 = check_expr env e1 in
 		let typeE2 = check_expr env e2 in
 		match (typeE1,typeE2) with
-		| ("Note","int") -> "PublicFunction.minus" ^ string_of_expr env e1 ^ "," ^ string_of_expr env e2^")"
-		| _ -> string_of_expr env e1 ^ "-" ^ string_of_expr env e2
+		| ("Note","int") -> "PublicFunction.minus" ^ string_of_expr env e1 ^ ", " ^ string_of_expr env e2^")"
+		| _ -> string_of_expr env e1 ^ " - " ^ string_of_expr env e2
 	)
 	
 
-	| Less(e1,e2) -> string_of_expr env e1 ^ "<" ^ string_of_expr env e2
-	| Greater(e1,e2) -> string_of_expr env e1 ^ ">" ^ string_of_expr env e2
-	| Less_Equal(e1,e2) -> string_of_expr env e1 ^ "<=" ^ string_of_expr env e2
-	| Greater_Equal(e1,e2) -> string_of_expr env e1 ^ ">=" ^ string_of_expr env e2
+	| Less(e1,e2) -> string_of_expr env e1 ^ " < " ^ string_of_expr env e2
+	| Greater(e1,e2) -> string_of_expr env e1 ^ " > " ^ string_of_expr env e2
+	| Less_Equal(e1,e2) -> string_of_expr env e1 ^ " <= " ^ string_of_expr env e2
+	| Greater_Equal(e1,e2) -> string_of_expr env e1 ^ " >= " ^ string_of_expr env e2
 
-	| Equal(e1,e2) -> string_of_expr env e1 ^ "==" ^ string_of_expr env e2
-	| Non_Equal(e1,e2) -> string_of_expr env e1 ^ "!=" ^ string_of_expr env e2
+	| Equal(e1,e2) -> string_of_expr env e1 ^ " == " ^ string_of_expr env e2
+	| Non_Equal(e1,e2) -> string_of_expr env e1 ^ " != " ^ string_of_expr env e2
 
-	| And(e1,e2) -> string_of_expr env e1 ^ "&&" ^ string_of_expr env e2
+	| And(e1,e2) -> string_of_expr env e1 ^ " && " ^ string_of_expr env e2
 
-	| Or(e1,e2) -> string_of_expr env e1 ^ "||" ^ string_of_expr env e2
+	| Or(e1,e2) -> string_of_expr env e1 ^ " || " ^ string_of_expr env e2
 
 	| Expr(e1,e2,e3) -> (
 		match e2 with 
@@ -147,17 +147,17 @@ let rec string_of_init env i =
 	| Func_Init(e)  -> (
 		let typeE = type_of_init env (List.hd e) in
 		match typeE with
-		| "Track" -> "new ArrayList<Track>(Arrays.asList("^ String.concat "," (List.rev_map (string_of_init env) e)^"))"
-		| "Note" -> "new ArrayList<Note>(Arrays.asList("^ String.concat "," (List.rev_map (string_of_init env) e)^"))"
-		|  _ ->"{" ^ String.concat "," (List.rev_map (string_of_init env) e) ^ "}" 
+		| "Track" -> "new ArrayList<Track>(Arrays.asList("^ String.concat ", " (List.rev_map (string_of_init env) e)^"))"
+		| "Note" -> "new ArrayList<Note>(Arrays.asList("^ String.concat ", " (List.rev_map (string_of_init env) e)^"))"
+		|  _ -> "{" ^ String.concat ", " (List.rev_map (string_of_init env) e) ^ "}" 
 	)
 
 let rec string_of_dec_list env decl =
 	match decl with
 	| Val_Decl(v) -> string_of_val_declarator env v
-	| Assignment(v,i) -> string_of_val_declarator env v ^ "=" ^ string_of_init env i
+	| Assignment(v,i) -> string_of_val_declarator env v ^ " = " ^ string_of_init env i
 	| Dec_list(d,v) -> string_of_dec_list env d ^ ", " ^ string_of_val_declarator env v
-	| Assign_list(d,v,i) -> string_of_dec_list env d ^ ", " ^ string_of_val_declarator env v ^ "= " ^ string_of_init env i
+	| Assign_list(d,v,i) -> string_of_dec_list env d ^ ", " ^ string_of_val_declarator env v ^ " = " ^ string_of_init env i
 
 
 
@@ -173,8 +173,8 @@ let rec string_of_stmt env stmt =
 	| Dec(datatype,d) -> (
 		let typed = type_of_dec_list env d in
 		match typed with 
-		| "array_Track"-> "List<Track>" ^ string_of_dec_list env d 
-		| "array_Note" -> "List<Note>" ^ string_of_dec_list env d 
+		| "array_Track"-> "List<Track> " ^ string_of_dec_list env d ^ ";"
+		| "array_Note" -> "List<Note> " ^ string_of_dec_list env d ^ ";"
 		| _ -> datatype ^ " " ^ string_of_dec_list env d ^ ";" 
 
 	)
@@ -224,20 +224,5 @@ let gen_program fileName table prog =
 	let env = (table, [0]) in
 	let programString = string_of_program env (fst prog, snd prog) in 
 	let out = sprintf
-  		"import java.io.File;\n
-		import java.io.IOException;\n
-		import java.util.ArrayList;\n
-		import java.util.Arrays;\n
-		import java.util.Iterator;\n
-		import java.util.List;\n
-		import definition.*;\n
-		import function.PublicFunction;\n
-		import com.leff.midi.*;\n
-		import com.leff.midi.event.MidiEvent;\n
-		import com.leff.midi.event.NoteOff;\n
-		import com.leff.midi.event.NoteOn;\n
-		import com.leff.midi.event.ProgramChange;\n
-		import com.leff.midi.event.meta.Tempo;\n
-		import com.leff.midi.event.meta.TimeSignature;\n\n
-		public class %s\n{\n%s\n}" fileName programString in
+  		"import java.io.*;\nimport java.util.*;\nimport definition.*;\nimport function.PublicFunction;\n\npublic class %s\n{\n%s\n}" fileName programString in
 	writeToFile fileName out 
