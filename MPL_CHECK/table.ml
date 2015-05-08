@@ -41,7 +41,7 @@ let base_table =
 	Hashtbl.add table "read" "void_String_Music";
 	Hashtbl.add table "write" "void_Music_String_void";
 	Hashtbl.add table "print" "void_String_void";
-	Hashtbl.add table "sizeof" "void_array_int";
+	Hashtbl.add table "sizeof" "void_array_Note_int";
 	
 	(* function_name: if called by note.func(): Type_funcname
 					  if general function:		funcname

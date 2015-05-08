@@ -3,6 +3,7 @@ open Table
 
 exception Not_Found of string
 exception Type_Not_Match of string
+exception Need_Init of string
 
 let current_scope = ref 0
 let inc_scope (u:unit) =
@@ -82,7 +83,8 @@ let rec check_expr env expr =
 			let typeE2 = check_expr env e2 in
 			if (((typeE1 = "int") && (typeE2 = "int")) || ((typeE1 = "double") && (typeE2 = "double")) ||
 				((typeE1 = "Melody") && (typeE2 = "Melody")) || ((typeE1 = "Music") && (typeE2 = "Music"))) then typeE1
-			else if ((typeE1 = "Note") && (typeE2 = "Note")) then "Melody"
+			else if (((typeE1 = "Note") && (typeE2 = "Note")) || ((typeE1 = "Melody") && (typeE2 = "Note")) || 
+				((typeE1 = "Melody") && (typeE2 = "Note"))) then "Melody"
 			else if ((typeE1 = "Note") && (typeE2 = "int")) then "Note"
 			else raise (Type_Not_Match ("The type of \"" ^ string_of_expr e1 ^ "\" does not match the type of \"" ^ string_of_expr e2 ^ "\" to do this calculation."));
 		
@@ -90,7 +92,7 @@ let rec check_expr env expr =
 			let typeE1 = check_expr env e1 in
 			let typeE2 = check_expr env e2 in
 			if (((typeE1 = "int") && (typeE2 = "int")) || ((typeE1 = "double") && (typeE2 = "double")) || 
-				((typeE1 = "Note") && (typeE2 = "int"))) then typeE1
+				((typeE1 = "Note") && (typeE2 = "int")) || ((typeE1 = "Melody") && (typeE2 = "Note"))) then typeE1
 			else raise (Type_Not_Match ("The type of \"" ^ string_of_expr e1 ^ "\" does not match the type of \"" ^ string_of_expr e2 ^ "\" to do this calculation."));
 
 
@@ -134,7 +136,7 @@ let rec check_expr env expr =
 					let typeE3 = check_expr env e3 in
 					if (((typeE1 = "int") && (typeE3 = "int")) || ((typeE1 = "double") && (typeE3 = "double")) ||
 						((typeE1 = "Melody") && (typeE3 = "Melody")) || ((typeE1 = "Music") && (typeE3 = "Music")) ||
-						((typeE1 = "Note") && (typeE3 = "int"))) then typeE1
+						((typeE1 = "Note") && (typeE3 = "int")) || ((typeE1 = "Melody") && (typeE3 = "Note"))) then typeE1
 					else raise (Type_Not_Match ("The type of \"" ^ string_of_expr e1 ^ "\" does not match the type of \"" ^ string_of_expr e3 ^ "\" to do this calculation."));
 				| SASS -> 
 					let typeE1 = check_expr env e1 in
@@ -255,17 +257,23 @@ let rec check_init datatype env i =
 			let eql a = (datatype = a) in
 			if not (List.for_all eql (List.map (check_init datatype env) e)) then
 				raise (Type_Not_Match ("The expressions in the list are expected of type " ^ datatype ^ "."));
-			datatype
+			"array_" ^ datatype
 
 let rec check_dec_list datatype env lst  =
 	match lst with
 		Val_Decl(v) -> add_val 0 datatype env v
 		| Assignment(v,i) -> 
+			let table = add_val 0 datatype env v in
+			let scope = List.hd (snd env) in
+			let typeV = Hashtbl.find table ((string_of_int scope) ^ "_" ^ (find_name v)) in
 			let typeI = check_init datatype env i in
-			if not (typeI = datatype) then
+			if not (typeI = typeV) then
 				raise (Type_Not_Match ("The type of \"" ^ string_of_init i ^ "\" was expected of type " ^ datatype ^ "."));
-			add_val 0 datatype env v
+			table
+			
 		| Dec_list(d,v) -> 
+			if ( (datatype = "Note") || (datatype = "Music") || (datatype = "Melody") || (datatype = "Track")) then
+				raise (Need_Init ("The variable " ^ string_of_val_declarator v ^ " need to be initialized when declaring."));
 			let env = (check_dec_list datatype env d, snd env) in
 				add_val 0 datatype env v
 		| Assign_list(d,v,i) ->
@@ -373,23 +381,6 @@ let check_func_def env func =
 		Hashtbl.replace table "current_function_type" s;
 		let env = (table, snd env)	in
 			call_list check_stmt env stmts
-
-(* let base_table = 
-	let table = Hashtbl.create 1024 in
-	Hashtbl.add table "current_loop" "false";
-	Hashtbl.add table "current_function_type" "None";
-	Hashtbl.add table "Note" "int_int_int_int";
-	Hashtbl.add table "Melody" "array_Note";
-	Hashtbl.add table "Track" "Melody_int";
-	Hashtbl.add table "Music" "array_Track";
-	Hashtbl.add table "Note_setDuration" "Note_int_void";
-	Hashtbl.add table "Melody_subMelody" "Melody_int_int_Melody";
-	Hashtbl.add table "setNoteDefault" "void_int_int_int_int_void"; *)
-	(* function_name: if called by note.func(): Type_funcname
-					  if general function:		funcname
-	   function_type: if called by note.func(): Type_argTypes_returnType
-					  if general function: 		void_argTypes_returnType *)
-	(* table *)
 
 let print key value =
 	print_string (key ^ " " ^ value ^ "\n")
