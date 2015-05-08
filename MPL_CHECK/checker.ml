@@ -1,4 +1,5 @@
 open Ast
+open Table
 
 exception Not_Found of string
 exception Type_Not_Match of string
@@ -373,7 +374,7 @@ let check_func_def env func =
 		let env = (table, snd env)	in
 			call_list check_stmt env stmts
 
-let base_table = 
+(* let base_table = 
 	let table = Hashtbl.create 1024 in
 	Hashtbl.add table "current_loop" "false";
 	Hashtbl.add table "current_function_type" "None";
@@ -383,12 +384,12 @@ let base_table =
 	Hashtbl.add table "Music" "array_Track";
 	Hashtbl.add table "Note_setDuration" "Note_int_void";
 	Hashtbl.add table "Melody_subMelody" "Melody_int_int_Melody";
-	Hashtbl.add table "setNoteDefault" "void_int_int_int_int_void";
+	Hashtbl.add table "setNoteDefault" "void_int_int_int_int_void"; *)
 	(* function_name: if called by note.func(): Type_funcname
 					  if general function:		funcname
 	   function_type: if called by note.func(): Type_argTypes_returnType
 					  if general function: 		void_argTypes_returnType *)
-	table
+	(* table *)
 
 let print key value =
 	print_string (key ^ " " ^ value ^ "\n")
