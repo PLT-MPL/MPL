@@ -213,13 +213,9 @@ public class PublicFunction {
 		if((noteList_1 == null) || (noteList_2 == null))
 			throw new NullPointerException();
 		
-
 		List<Note> newNoteList = new ArrayList<Note>(noteList_1);
 		
-		System.out.println();
 		newNoteList.addAll(noteList_2);
-		for(Note note : noteList_2)
-			System.out.println(note.getStartTime() + ", " + note.getDuration());
 		Melody melody = new Melody(newNoteList);
 		return melody;
 	}
@@ -259,8 +255,9 @@ public class PublicFunction {
 	//melody = melody * 3
 	public static Melody multipleInt(Melody melody, int time){
 
-		 Melody newMelody = new Melody();
+		 Melody newMelody = new Melody(melody);
 			for(int i=0;i<time;i++){
+				System.out.println(newMelody.getLength());
 				newMelody = addMelody(newMelody,melody);
 			}
 			return newMelody;
