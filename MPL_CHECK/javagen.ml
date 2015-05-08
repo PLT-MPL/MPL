@@ -152,12 +152,18 @@ let rec string_of_init env i =
 		|  _ -> "{" ^ String.concat ", " (List.rev_map (string_of_init env) e) ^ "}" 
 	)
 
-let rec string_of_dec_list env decl =
+let rec string_of_dec_list env flag decl =
 	match decl with
 	| Val_Decl(v) -> string_of_val_declarator env v
-	| Assignment(v,i) -> string_of_val_declarator env v ^ " = " ^ string_of_init env i
-	| Dec_list(d,v) -> string_of_dec_list env d ^ ", " ^ string_of_val_declarator env v
-	| Assign_list(d,v,i) -> string_of_dec_list env d ^ ", " ^ string_of_val_declarator env v ^ " = " ^ string_of_init env i
+	| Assignment(v,i) -> 
+		if flag then 
+			let name = find_name v in
+			name ^ " = " ^ string_of_init env i
+		else
+			(string_of_val_declarator env v) ^ " = " ^ string_of_init env i
+
+	| Dec_list(d,v) -> string_of_dec_list env flag d ^ ", " ^ string_of_val_declarator env v
+	| Assign_list(d,v,i) -> string_of_dec_list env flag d ^ ", " ^ string_of_val_declarator env v ^ " = " ^ string_of_init env i
 
 
 
@@ -173,9 +179,9 @@ let rec string_of_stmt env stmt =
 	| Dec(datatype,d) -> (
 		let typed = type_of_dec_list env d in
 		match typed with 
-		| "array_Track"-> "List<Track> " ^ string_of_dec_list env d ^ ";"
-		| "array_Note" -> "List<Note> " ^ string_of_dec_list env d ^ ";"
-		| _ -> datatype ^ " " ^ string_of_dec_list env d ^ ";" 
+		| "array_Track"-> "List<Track> " ^ string_of_dec_list env true d ^ ";"
+		| "array_Note" -> "List<Note> " ^ string_of_dec_list env true d ^ ";"
+		| _ -> datatype ^ " " ^ string_of_dec_list env false d ^ ";" 
 
 	)
 	| If(e,stmt) -> "if " ^ "(" ^ string_of_expr env e ^ ")" ^ string_of_stmt env stmt

@@ -203,18 +203,20 @@ let rec add_val arr datatype env v =
 		| Array_Dec(vd, None) ->
 			add_val (arr + 1) datatype env vd
 
-let rec find_name env v =
+let rec find_name v =
 	match v with 
-	VId(vid) -> 
-			let scope = List.hd (snd env) in
-			(string_of_int scope) ^ "_" ^ vid
-	| Array_Dec(vd, e) -> find_name env vd
+	VId(vid) -> vid
+	| Array_Dec(vd, e) -> find_name vd
+
+let find_name_with_scope env v =
+	let scope = List.hd (snd env) in
+	(string_of_int scope) ^ "_" ^ (find_name v)
 
 let type_of_para env d =
 	match d with
 		Param(t, v) -> 
 			let table = add_val 0 t env v in
-			Hashtbl.find table (find_name env v)
+			Hashtbl.find table (find_name_with_scope env v)
 
 
 let rec add_func datatype env f =
@@ -273,18 +275,21 @@ let rec check_init datatype env i =
 let rec type_of_dec_list env lst =
 	let table = fst env in
 	(match lst with
-		Val_Decl(v) -> Hashtbl.find table (find_name env v)
-		| Assignment(v, i) -> Hashtbl.find table (find_name env v)
-		| Dec_list(d,v) -> Hashtbl.find table (find_name env v)
-		| Assign_list(d,v,i) -> Hashtbl.find table (find_name env v))
+		Val_Decl(v) -> Hashtbl.find table (find_name_with_scope env v)
+		| Assignment(v, i) -> Hashtbl.find table (find_name_with_scope env v)
+		| Dec_list(d,v) -> Hashtbl.find table (find_name_with_scope env v)
+		| Assign_list(d,v,i) -> Hashtbl.find table (find_name_with_scope env v))
 
 let rec check_dec_list datatype env lst  =
 	match lst with
-		Val_Decl(v) -> add_val 0 datatype env v
+		Val_Decl(v) -> 
+			if ((datatype = "Note") || (datatype = "Music") || (datatype = "Melody") || (datatype = "Track")) then
+				raise (Need_Init ("The variable " ^ string_of_val_declarator v ^ " need to be initialized when declaring."));
+			add_val 0 datatype env v
 		| Assignment(v,i) -> 
 			let table = add_val 0 datatype env v in
 			let env = (table, snd env) in
-			let typeV = Hashtbl.find table (find_name env v) in
+			let typeV = Hashtbl.find table (find_name_with_scope env v) in
 			let typeI = check_init datatype env i in
 			if not (typeI = typeV) then
 				raise (Type_Not_Match ("The type of \"" ^ string_of_init i ^ "\" was expected of type " ^ datatype ^ "."));
