@@ -9,7 +9,7 @@ all:
 	ocamlc -c lexer.ml; 
 	ocamlc -c parser.ml;
 	ocamlc -c main.ml;
-	ocamlc -o test ast.cmo table.cmo checker.cmo javagen.cmo parser.cmo lexer.cmo main.cmo;
+	ocamlc -o MPL ast.cmo table.cmo checker.cmo javagen.cmo parser.cmo lexer.cmo main.cmo;
 
 clean:
 	rm -rf *.cmo
