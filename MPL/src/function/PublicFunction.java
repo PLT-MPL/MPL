@@ -16,8 +16,8 @@ import com.leff.midi.event.ProgramChange;
 import definition.*;
 
 public class PublicFunction {
-	public static void setNoteDefault(int pitch, int startTime,
-			int duration, int strength){
+	public static void setNoteDefault(int pitch, int duration, int startTime,
+			 int strength){
 		
 		C.NOTE_DEFAULT_PITCH = pitch;
 		C.NOTE_DEFAULT_STARTTIME = startTime;
@@ -298,6 +298,7 @@ public class PublicFunction {
 
 		long maxEndTime = music_1.getTimeLength();
 		
+		
 		newTrackList.addAll(trackList_1);
 		
 		for(Track track : trackList_2)
@@ -316,16 +317,24 @@ public class PublicFunction {
 			{
 				Note tmp = new Note(note);
 				tmp.setStartTime(startTime);
+				
 				newNoteList.add(tmp);
 				
 				startTime = startTime + note.getDuration();
 			}
-			
 			Melody newMelody = new Melody(newNoteList);
 			Track newTrack = new Track(newMelody);
 			newTrackList.add(newTrack);
+			System.out.println(newTrack.getMelody().getNote(0).getStartTime()+"hhhh");
 		}
-
+		
+		for(Track track: newTrackList){
+			Melody melody = track.getMelody();
+			System.out.println("");
+			for(Note note: melody.getNoteList()){
+				System.out.println(note.getStartTime());
+			}
+		}
 		Music newMusic = new Music(newTrackList);
 
 		return newMusic;

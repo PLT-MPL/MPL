@@ -76,6 +76,13 @@ public class Music {
 		}
 		m_trackList.addAll(trackList);
 		
+		for(Track track: m_trackList){
+			Melody melody = track.getMelody();
+			System.out.println("");
+			for(Note note: melody.getNoteList())
+				System.out.println(note.getStartTime());
+		}
+		
 	}
 	
 	public void multiplyMusic(Music music)
