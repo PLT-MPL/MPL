@@ -416,4 +416,7 @@ let check_program (stmts, funcs) =
 	let table = call_list check_func_def env (List.rev funcs) in
 	if not (Hashtbl.mem table "main") then
 		raise (No_Main ("There is no \"main\" function in this program."));
+	let typeM = Hashtbl.find table "main" in
+	if not (typeM = "void_array_String_void") then
+		raise (No_Main ("The argument of \"main\" function are expected to be \"string[]\", and return void."));
 	table

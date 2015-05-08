@@ -143,7 +143,7 @@ let rec string_of_init env i =
 	| Init(s, Some(e)) -> (
 		match s with
 		| "Note" -> "new Note(" ^ String.concat ", " (List.rev_map (string_of_expr env) e) ^ ")"
-		| "Meldoy" -> "new Melody(" ^ String.concat ", " (List.rev_map (string_of_expr env) e) ^ ")"
+		| "Melody" -> "new Melody(" ^ String.concat ", " (List.rev_map (string_of_expr env) e) ^ ")"
 		| "Music" -> "new Musci(" ^ String.concat ", " (List.rev_map (string_of_expr env) e) ^ ")"
 		| "Track" -> "new Track(" ^ String.concat ", " (List.rev_map (string_of_expr env) e) ^ ")"
 		| _ -> s
