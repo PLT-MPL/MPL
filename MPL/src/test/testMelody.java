@@ -42,7 +42,7 @@ public class testMelody {
 		}
 		else if(testcase == 2){
 			//2) test multipleMelody in PublicFunction
-			newMelody = PublicFunction.multipleMelody(melody, melody2);
+			newMelody = PublicFunction.multiplyMelody(melody, melody2);
 			track = new Track(newMelody,C.PIANO);
 			music = new Music();
 			music.insertTrack(track);
@@ -58,7 +58,7 @@ public class testMelody {
 		}
 		else if(testcase == 4){
 			//4) test multipleInt in PublicFunction
-			newMelody = PublicFunction.multipleInt(melody2, 3);
+			newMelody = PublicFunction.multiplyInt(melody2, 3);
 			track = new Track(newMelody,C.PIANO);
 			music = new Music();
 			music.insertTrack(track);

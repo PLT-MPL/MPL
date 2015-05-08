@@ -16,8 +16,8 @@ import com.leff.midi.event.ProgramChange;
 import definition.*;
 
 public class PublicFunction {
-	public static void setNoteDefault(int pitch, int startTime,
-			int duration, int strength){
+	public static void setNoteDefault(int pitch, int duration, 
+			int startTime, int strength){
 		
 		C.NOTE_DEFAULT_PITCH = pitch;
 		C.NOTE_DEFAULT_STARTTIME = startTime;
@@ -205,7 +205,7 @@ public class PublicFunction {
 	}
 	
 	//melody  = melody * melody
-	public static Melody multipleMelody(Melody melody_1, Melody melody_2)
+	public static Melody multiplyMelody(Melody melody_1, Melody melody_2)
 	{
 		List<Note> noteList_1 = melody_1.getNoteList();
 		List<Note> noteList_2 = melody_2.getNoteList();
@@ -253,7 +253,7 @@ public class PublicFunction {
 	}
 
 	//melody = melody * 3
-	public static Melody multipleInt(Melody melody, int time){
+	public static Melody multiplyInt(Melody melody, int time){
 
 		 Melody newMelody = new Melody(melody);
 			for(int i=0;i<time;i++){
@@ -264,7 +264,7 @@ public class PublicFunction {
 	}
 
 	//melody = 3 *  melody
-	public static Melody multipleInt(int time, Melody melody){
+	public static Melody multiplyInt(int time, Melody melody){
 	
         Melody newMelody = new Melody();
 		for(int i=0;i<time;i++){
@@ -312,7 +312,7 @@ public class PublicFunction {
 	}
 	
 	// music = music * music
-	public static Music multipleMusic(Music music_1, Music music_2)
+	public static Music multiplyMusic(Music music_1, Music music_2)
 	{
 		List<Track> trackList_1 = music_1.getTracks();
 		List<Track> trackList_2 = music_2.getTracks();
