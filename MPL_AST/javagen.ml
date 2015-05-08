@@ -185,7 +185,7 @@ let rec string_of_func_declarator = function
 	| Func_dec_p(s,None) -> s ^ "(" ^ " " ^ ")"
 
 let rec string_of_func_def = function
-	Func_Def(s, d, stmts) -> s ^ " " ^ string_of_func_declarator d ^ "{\n" ^ String.concat "\n" (List.map string_of_stmt stmts) ^ "\n}\n"
+	Func_Def(s, d, stmts) -> "public static "^ s ^ " " ^ string_of_func_declarator d ^ "{\n" ^ String.concat "\n" (List.map string_of_stmt stmts) ^ "\n}\n"
 
 
 let string_of_program (stmts, funcs) =
@@ -200,5 +200,21 @@ let  writeToFile fileName progString =
   let gen_program fileName prog = 
   	let programString = string_of_program (fst prog, snd prog) in 
   	let out = sprintf
-  		"\npublic class %s\n{\n%s%s\n}" fileName programString "public static void main(String[] args){ main(0,\"\");){return ;}}" in
+  		"import java.io.File;\n
+		import java.io.IOException;\n
+		import java.util.ArrayList;\n
+		import java.util.Arrays;\n
+		import java.util.Iterator;\n
+		import java.util.List;\n
+		import definition.*;\n
+		import function.PublicFunction;\n
+		import com.leff.midi.*;\n
+		import com.leff.midi.event.MidiEvent;\n
+		import com.leff.midi.event.NoteOff;\n
+		import com.leff.midi.event.NoteOn;\n
+		import com.leff.midi.event.ProgramChange;\n
+		import com.leff.midi.event.meta.Tempo;\n
+		import com.leff.midi.event.meta.TimeSignature;\n\n
+		public class %s\n{\n%s%s\n}" fileName programString 
+		"public static void main(String[] args){ main(0,\"\");){return ;}}" in
   	writeToFile fileName out 
