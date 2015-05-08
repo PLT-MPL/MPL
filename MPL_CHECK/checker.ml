@@ -4,6 +4,7 @@ open Table
 exception Not_Found of string
 exception Type_Not_Match of string
 exception Need_Init of string
+exception No_Main of string
 
 let current_scope = ref 0
 let inc_scope (u:unit) =
@@ -18,30 +19,32 @@ let rec call_list func env lst =
 			let env = (new_table, snd env) in
 				call_list func env t
 
+let find_type_by_name env s =
+	let table = fst env in
+	let scopes = snd env in
+	let i = ref 0 in
+	let scope = ref (List.hd scopes) in
+	if (Hashtbl.mem table s) then 
+		let typeFunc = Hashtbl.find table s in
+		String.sub typeFunc 5 ((String.length typeFunc) - 5)
+	else begin 
+		while not (Hashtbl.mem table ((string_of_int (!scope)) ^ "_" ^ s)) do
+			i := !i + 1;
+			if !i >= List.length scopes then
+				raise (Not_Found ("Could not find varialble " ^ s ^ "."));
+			scope := List.nth scopes !i
+		done;
+		Hashtbl.find table ((string_of_int !scope) ^ "_" ^ s)
+	end
+
 let rec check_expr env expr =
 	match expr with
-		Id(s) -> 	
-			let table = fst env in
-			let scopes = snd env in
-			let i = ref 0 in
-			let scope = ref (List.hd scopes) in
-			if (Hashtbl.mem table s) then 
-				let typeFunc = Hashtbl.find table s in
-				String.sub typeFunc 5 ((String.length typeFunc) - 5)
-			else begin 
-				while not (Hashtbl.mem table ((string_of_int (!scope)) ^ "_" ^ s)) do
-					i := !i + 1;
-					if !i >= List.length scopes then
-						raise (Not_Found ("Could not find varialble " ^ s ^ "."));
-					scope := List.nth scopes !i
-				done;
-				Hashtbl.find table ((string_of_int !scope) ^ "_" ^ s)
-			end
+		Id(s) -> find_type_by_name env s
 		| IntCon(c) -> "int"
 		| DoubleCon(d) -> "double"
 		| BoolCon(b) -> "Boolean"
 		| StrCon(s) -> "String"
-
+		| InsCon(s) | PitCon(s) -> "int"
 		| Dot_Expr(e,s) -> 
 			let typeID = check_expr env e in
 			let table = fst env in
@@ -200,17 +203,18 @@ let rec add_val arr datatype env v =
 		| Array_Dec(vd, None) ->
 			add_val (arr + 1) datatype env vd
 
-let rec find_name = function 
-	VId(vid) -> vid
-	| Array_Dec(vd, e) -> find_name vd
+let rec find_name env v =
+	match v with 
+	VId(vid) -> 
+			let scope = List.hd (snd env) in
+			(string_of_int scope) ^ "_" ^ vid
+	| Array_Dec(vd, e) -> find_name env vd
 
 let type_of_para env d =
 	match d with
 		Param(t, v) -> 
 			let table = add_val 0 t env v in
-			let name = find_name v in
-			let scope = List.hd (snd env) in
-				Hashtbl.find table ((string_of_int scope) ^ "_" ^ name)
+			Hashtbl.find table (find_name env v)
 
 
 let rec add_func datatype env f =
@@ -229,6 +233,13 @@ let rec add_func datatype env f =
 			let typeID = "void_" ^ String.concat "_" (List.rev_map (type_of_para env) pl) ^ "_" ^  datatype in
 				Hashtbl.add table s typeID;
 				table
+
+let rec type_of_init env i =
+	match i with
+		Expr_Init(e) -> check_expr env e
+		| Init(s, e) -> s
+		| Func_Init(e) -> 
+			"array_" ^ (type_of_init env (List.hd e))
 
 let rec check_init datatype env i =
 	match i with
@@ -259,13 +270,21 @@ let rec check_init datatype env i =
 				raise (Type_Not_Match ("The expressions in the list are expected of type " ^ datatype ^ "."));
 			"array_" ^ datatype
 
+let rec type_of_dec_list env lst =
+	let table = fst env in
+	(match lst with
+		Val_Decl(v) -> Hashtbl.find table (find_name env v)
+		| Assignment(v, i) -> Hashtbl.find table (find_name env v)
+		| Dec_list(d,v) -> Hashtbl.find table (find_name env v)
+		| Assign_list(d,v,i) -> Hashtbl.find table (find_name env v))
+
 let rec check_dec_list datatype env lst  =
 	match lst with
 		Val_Decl(v) -> add_val 0 datatype env v
 		| Assignment(v,i) -> 
 			let table = add_val 0 datatype env v in
-			let scope = List.hd (snd env) in
-			let typeV = Hashtbl.find table ((string_of_int scope) ^ "_" ^ (find_name v)) in
+			let env = (table, snd env) in
+			let typeV = Hashtbl.find table (find_name env v) in
 			let typeI = check_init datatype env i in
 			if not (typeI = typeV) then
 				raise (Type_Not_Match ("The type of \"" ^ string_of_init i ^ "\" was expected of type " ^ datatype ^ "."));
@@ -390,7 +409,6 @@ let check_program (stmts, funcs) =
 	let env = (table, [0]) in
 	let table = call_list check_stmt env stmts in
 	let table = call_list check_func_def env (List.rev funcs) in
-		print_string "--------------------- TABLE -----------------------\n";
-		Hashtbl.iter print table;
-		print_string "--------------------- TABLE -----------------------\n";
-		inc_scope()
+	if not (Hashtbl.mem table "main") then
+		raise (No_Main ("There is no \"main\" function in this program."));
+	table

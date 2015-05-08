@@ -27,6 +27,8 @@ constant:
 	| DOUB_CON				{ DoubleCon $1 }
 	| BOOL_CON				{ BoolCon $1 }
 	| STR_CON				{ StrCon $1 } 
+	| INS_CON				{ InsCon $1 }
+	| PIT_CON				{ PitCon $1 }
 
 
 primary_expr:

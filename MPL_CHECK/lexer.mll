@@ -59,12 +59,12 @@ rule token = parse
 | "continue" 		{ CONTINUE }
 
 | "true"|"false" 	as lxm { BOOL_CON(bool_of_string lxm) }
-| Identifier		as lxm { ID(lxm) }
 | Integer_cons    	as lxm { INT_CON(int_of_string lxm) }
 | Double_cons	  	as lxm { DOUB_CON(float_of_string lxm) }
 | Pitch_cons	  	as lxm { PIT_CON(lxm) }
 | Instrument_cons 	as lxm { INS_CON(lxm) }
 | String_cons		as lxm { STR_CON(lxm) }
+| Identifier		as lxm { ID(lxm) }
 | eof			  	{ EOF }
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
 
