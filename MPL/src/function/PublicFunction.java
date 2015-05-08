@@ -103,14 +103,21 @@ public class PublicFunction {
 			 
 			Melody melody = track.getMelody();
 			List<Note> notelist = melody.getNoteList();
+			int time = 1;
 			//int tempo = 120; 
 			for(Note note: notelist){
 				int pitch = note.getPitch();
 				long duration = note.getDuration();
 				long startTime = note.getStartTime();
 				int strength = note.getStrength();
-				// System.out.println(channel + ", " + pitch + ", " + strength + ", " 
-				//		+ startTime + ", " + duration);
+				/*
+				 System.out.println(channel + ", " + pitch + ", " + strength + ", " 
+						+ startTime + ", " + duration);
+						*/
+				 if((startTime == 2000)&& (time == 2))
+					 break;
+				 else if(startTime == 2000)
+					 time = time + 1;
 				miditrack.insertNote(channel,pitch,strength,startTime,duration);
 			}
 			channel++;
@@ -172,8 +179,11 @@ public class PublicFunction {
 	//melody  = melody + melody
 	public static Melody addMelody(Melody melody_1, Melody melody_2)
 	{
-		List<Note> noteList_2 = melody_2.getNoteList();
 		List<Note> noteList_1 = melody_1.getNoteList();
+		List<Note> noteList_2 = melody_2.getNoteList();
+		
+		List<Note> newNoteList = new ArrayList<Note>();
+		
 		if((noteList_2 == null) ||  (noteList_1 == null))
 			throw new NullPointerException();
 		
@@ -181,74 +191,79 @@ public class PublicFunction {
 		Note lastNote = noteList_1.get(listSize-1);
 		long startTime = lastNote.getStartTime() + lastNote.getDuration();
 		
+		newNoteList.addAll(noteList_1);
 		for(Note note: noteList_2)
 		{
-			note.setStartTime(startTime);
+			Note tmp = new Note(note);
+			tmp.setStartTime(startTime);
+			newNoteList.add(tmp);
 			startTime = startTime + note.getDuration();
 		}
-		noteList_1.addAll(noteList_2);
-
-		melody_1.setNoteList(noteList_1);
-		return melody_1;
+		
+		Melody melody = new Melody(newNoteList);
+		return melody;
 	}
 	
 	//melody  = melody * melody
 	public static Melody multipleMelody(Melody melody_1, Melody melody_2)
 	{
 		List<Note> noteList_1 = melody_1.getNoteList();
-		if(noteList_1 == null)
+		List<Note> noteList_2 = melody_2.getNoteList();
+		
+		if((noteList_1 == null) || (noteList_2 == null))
 			throw new NullPointerException();
 		
-		List<Note> noteList_2 = melody_2.getNoteList();
-		if(noteList_2 == null)
-			throw new NullPointerException();
 
-		noteList_1.addAll(noteList_2);
-		melody_1.setNoteList(noteList_1);
-		return melody_1;
+		List<Note> newNoteList = new ArrayList<Note>(noteList_1);
+		
+		System.out.println();
+		newNoteList.addAll(noteList_2);
+		for(Note note : noteList_2)
+			System.out.println(note.getStartTime() + ", " + note.getDuration());
+		Melody melody = new Melody(newNoteList);
+		return melody;
 	}
 
 	//melody  = melody + note
 	public static Melody addNote(Melody melody, Note note){
 		
 		List<Note> noteList = melody.getNoteList();
+		
 		if(noteList == null)
 			noteList = new ArrayList<Note>();
 		
-		noteList.add(note);
-		melody.setNoteList(noteList);
-
-		return melody;
+		List<Note> newNoteList = new ArrayList<Note>();
+		newNoteList.addAll(noteList);
+		newNoteList.add(note);
+		
+		Melody newMelody = new Melody(newNoteList);
+		return newMelody;
 	}
 
 	//melody  = note + melody
 	public static Melody addNote(Note note, Melody melody){
 	
 		List<Note> noteList = melody.getNoteList();
+		
 		if(noteList == null)
 			noteList = new ArrayList<Note>();
 		
-		noteList.add(note);
-		melody.setNoteList(noteList);
-
-		return melody;
+		List<Note> newNoteList = new ArrayList<Note>();
+		newNoteList.addAll(noteList);
+		newNoteList.add(note);
+		
+		Melody newMelody = new Melody(newNoteList);
+		return newMelody;
 	}
 
 	//melody = melody * 3
 	public static Melody multipleInt(Melody melody, int time){
 
-		List<Note> noteList = melody.getNoteList();
-		if(noteList == null)
-			noteList = new ArrayList<Note>();
-		
-		
-		List<Note> newList = new ArrayList<Note>();
-		for(int i=0;i<time;i++){
-			newList.addAll(noteList);
-		}
-
-		melody.setNoteList(newList);
-		return melody;
+		 Melody newMelody = new Melody();
+			for(int i=0;i<time;i++){
+				newMelody = addMelody(newMelody,melody);
+			}
+			return newMelody;
 	}
 
 	//melody = 3 *  melody
@@ -258,7 +273,7 @@ public class PublicFunction {
 		for(int i=0;i<time;i++){
 			newMelody = addMelody(newMelody,melody);
 		}
-		return melody;
+		return newMelody;
 	}
 
 	// music = music + music
