@@ -175,6 +175,18 @@ public class PublicFunction {
 
 		return new Note(pitch-val, duration, startTime, strength);
 	}
+	
+	// Melody = note + note
+	public static Melody addNote(Note note_1, Note note_2){
+		
+		List<Note> noteList = new ArrayList<Note>();
+		noteList.add(note_1);
+		noteList.add(note_2);
+		
+		Melody melody = new Melody(noteList);
+		
+		return melody;
+	}
 
 	//melody  = melody + melody
 	public static Melody addMelody(Melody melody_1, Melody melody_2)
@@ -266,7 +278,7 @@ public class PublicFunction {
 	//melody = 3 *  melody
 	public static Melody multiplyInt(int time, Melody melody){
 	
-        Melody newMelody = new Melody();
+        Melody newMelody = new Melody(melody);
 		for(int i=0;i<time;i++){
 			newMelody = addMelody(newMelody,melody);
 		}
@@ -279,10 +291,14 @@ public class PublicFunction {
 		List<Track> trackList_2 = music_2.getTracks();
 		List<Track> trackList_1 = music_1.getTracks();
 
+		List<Track> newTrackList = new ArrayList<Track>();
+		
 		if((trackList_1 == null) || (trackList_2 == null))
 				throw new NullPointerException();
 
 		long maxEndTime = music_1.getTimeLength();
+		
+		newTrackList.addAll(trackList_1);
 		
 		for(Track track : trackList_2)
 		{
@@ -290,6 +306,7 @@ public class PublicFunction {
 			if(melody == null)
 				throw new NullPointerException();
 			
+			List<Note> newNoteList = new ArrayList<Note>();
 			List<Note> noteLists = melody.getNoteList();
 			if(noteLists == null)
 				throw new NullPointerException();
@@ -297,15 +314,19 @@ public class PublicFunction {
 			long startTime = maxEndTime;
 			for(Note note: noteLists)
 			{
-				note.setStartTime(startTime);
+				Note tmp = new Note(note);
+				tmp.setStartTime(startTime);
+				newNoteList.add(tmp);
+				
 				startTime = startTime + note.getDuration();
 			}
-			melody.setNoteList(noteLists);
-			track.setMelody(melody);
+			
+			Melody newMelody = new Melody(newNoteList);
+			Track newTrack = new Track(newMelody);
+			newTrackList.add(newTrack);
 		}
-		trackList_1.addAll(trackList_2);
 
-		Music newMusic = new Music(trackList_1);
+		Music newMusic = new Music(newTrackList);
 
 		return newMusic;
 		
@@ -316,6 +337,8 @@ public class PublicFunction {
 	{
 		List<Track> trackList_1 = music_1.getTracks();
 		List<Track> trackList_2 = music_2.getTracks();
+		
+		List<Track> trackList = new ArrayList<Track>();
 
 		if((trackList_1 == null) || (trackList_2 == null))
 				throw new NullPointerException();
@@ -331,9 +354,10 @@ public class PublicFunction {
 				throw new NullPointerException();
 		
 		}
-		trackList_1.addAll(trackList_2);
+		trackList.addAll(trackList_1);
+		trackList.addAll(trackList_2);
 
-		Music newMusic = new Music(trackList_1);
+		Music newMusic = new Music(trackList);
 		return newMusic;
 	}
 

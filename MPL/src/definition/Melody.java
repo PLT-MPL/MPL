@@ -1,5 +1,6 @@
 package definition;
 import java.util.*;
+import function.*;
 
 public class Melody {
 	
@@ -119,11 +120,13 @@ public class Melody {
 	}
 	
 	//multiplyInt
-	public void multiplyInt(int time){
-		 Melody newMelody = new Melody(m_noteList);
-		 for(int i=0;i<time;i++){
-			 this.addMelody(newMelody);
-		 }
+	public Melody multiplyInt(int time){
+		
+        Melody newMelody = new Melody(this);
+		for(int i=0;i<time;i++){
+			newMelody = PublicFunction.addMelody(newMelody,this);
+		}
+		return newMelody;
 	}
 	
 	
