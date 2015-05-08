@@ -3,7 +3,7 @@ import java.util.*;
 import definition.*;
 import function.PublicFunction;
 
-public class test
+public class test1
 {
 
 public static int fun(int a,double b){

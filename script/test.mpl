@@ -8,10 +8,9 @@ void main(int arg[]) {
 	string path = "test";
 	/*Music music = read(path, 2);
 	Track tracks[3] = music.getTracks();*/
-	Track tracks[3];
 	Note notes1[] = {Note(1,1,1), Note(1)};
 	Melody melody0 = Melody();
-	notes1[2].setDuration(1);
+	notes1[1].setDuration(1);
 	
 	int i;
 	i = 1 + fun(1, 2.);
