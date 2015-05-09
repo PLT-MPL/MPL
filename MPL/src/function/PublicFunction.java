@@ -72,8 +72,8 @@ public class PublicFunction {
                 	NoteOn en = (NoteOn) it.next();
                     
                     int pitch = sn.getNoteValue();
-                    long duration = en.getTick()-sn.getTick();
-                    long startTime = sn.getTick();
+                    int duration = (int)(en.getTick()-sn.getTick());
+                    int startTime = (int)sn.getTick();
                     int strength = sn.getVelocity();
                     
                     // System.out.println(timbre + ", " + pitch + ", " + strength + ", " 
@@ -93,7 +93,7 @@ public class PublicFunction {
 		// System.out.println("\n/********write*******/");
 
         List<Track> tracklist = music.getTracks();
-		int channel = 1;
+		int channel = 0;
 		ArrayList<MidiTrack> midiTrackList = new ArrayList<MidiTrack>();
 		for(Track track: tracklist){
 			MidiTrack miditrack = new MidiTrack();
@@ -107,8 +107,8 @@ public class PublicFunction {
 			//int tempo = 120; 
 			for(Note note: notelist){
 				int pitch = note.getPitch();
-				long duration = note.getDuration();
-				long startTime = note.getStartTime();
+				int duration = note.getDuration();
+				int startTime = note.getStartTime();
 				int strength = note.getStrength();
 				/*
 				 System.out.println(channel + ", " + pitch + ", " + strength + ", " 
@@ -149,8 +149,8 @@ public class PublicFunction {
 	// note = note + 2
 	public static Note plus(Note note, int val){
 		int pitch = note.getPitch();
-		long duration = note.getDuration();
-		long startTime = note.getStartTime();
+		int duration = note.getDuration();
+		int startTime = note.getStartTime();
 		int strength = note.getStrength();
 
 		return new Note(pitch+val, duration, startTime, strength);
@@ -159,8 +159,8 @@ public class PublicFunction {
 	// note = 2 + note
 	public static Note plus(int val, Note note){
 		int pitch = note.getPitch();
-		long duration = note.getDuration();
-		long startTime = note.getStartTime();
+		int duration = note.getDuration();
+		int startTime = note.getStartTime();
 		int strength = note.getStrength();
 
 		return new Note(pitch+val, duration, startTime, strength);
@@ -169,8 +169,8 @@ public class PublicFunction {
 	// note = note - 2
 	public static Note minus(Note note, int val){
 		int pitch = note.getPitch();
-		long duration = note.getDuration();
-		long startTime = note.getStartTime();
+		int duration = note.getDuration();
+		int startTime = note.getStartTime();
 		int strength = note.getStrength();
 
 		return new Note(pitch-val, duration, startTime, strength);
@@ -201,7 +201,7 @@ public class PublicFunction {
 		
 		int listSize = noteList_1.size();
 		Note lastNote = noteList_1.get(listSize-1);
-		long startTime = lastNote.getStartTime() + lastNote.getDuration();
+		int startTime = lastNote.getStartTime() + lastNote.getDuration();
 		
 		newNoteList.addAll(noteList_1);
 		for(Note note: noteList_2)
@@ -296,7 +296,7 @@ public class PublicFunction {
 		if((trackList_1 == null) || (trackList_2 == null))
 				throw new NullPointerException();
 
-		long maxEndTime = music_1.getTimeLength();
+		int maxEndTime = music_1.getTimeLength();
 		
 		
 		newTrackList.addAll(trackList_1);
@@ -312,7 +312,7 @@ public class PublicFunction {
 			if(noteLists == null)
 				throw new NullPointerException();
 			
-			long startTime = maxEndTime;
+			int startTime = maxEndTime;
 			for(Note note: noteLists)
 			{
 				Note tmp = new Note(note);

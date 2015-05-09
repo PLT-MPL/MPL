@@ -1,4 +1,3 @@
-
 void main(string arg[]) {
 
 	Music music = read("twinkle_twinkle2.mid");
@@ -9,7 +8,7 @@ void main(string arg[]) {
 	}
 	
 	// for each track in the music, set its timbre to VIOLIN
-	write(music, "new_twinkle_twinkle.mid");
+	write(music, "twinkle_twinkle3.mid");
 	// export the midi file
 	
 	print("Done...\n");
