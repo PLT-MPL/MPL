@@ -75,7 +75,6 @@ let rec string_of_expr env expr =
 				(match (typeE1, typeE3) with
 					("Melody", "Melody") -> string_of_expr env e1 ^ "." ^ "addMelody(" ^ string_of_expr env e3 ^ ")"
 					| ("Music", "Music") -> string_of_expr env e1 ^ "." ^ "addMusic(" ^ string_of_expr env e3 ^ ")"
-					| ("Note", "Note") -> string_of_expr env e1 ^ "." ^ "addNote(" ^ string_of_expr env e3 ^ ")"
 					| ("Note", "int") -> string_of_expr env e1 ^ "." ^ "plus(" ^ string_of_expr env e3 ^ ")"
 					| ("Melody", "Note") -> string_of_expr env e1 ^ "." ^ "addNote(" ^ string_of_expr env e3 ^ ")"
 					| _ -> string_of_expr env e1 ^ " += " ^ string_of_expr env e3
@@ -151,8 +150,8 @@ let rec string_of_init env i =
 	| Func_Init(e)  -> (
 		let typeE = type_of_init env (List.hd e) in
 		match typeE with
-		| "Track" -> "new ArrayList<Track>(Arrays.asList("^ String.concat ", " (List.rev_map (string_of_init env) e)^"))"
-		| "Note" -> "new ArrayList<Note>(Arrays.asList("^ String.concat ", " (List.rev_map (string_of_init env) e)^"))"
+		| "Track" -> "new ArrayList<Track>(Arrays.asList({"^ String.concat ", " (List.rev_map (string_of_init env) e)^"}))"
+		| "Note" -> "new ArrayList<Note>(Arrays.asList({"^ String.concat ", " (List.rev_map (string_of_init env) e)^"}))"
 		|  _ -> "{" ^ String.concat ", " (List.rev_map (string_of_init env) e) ^ "}" 
 	)
 
@@ -185,7 +184,7 @@ let rec string_of_stmt env stmt =
 	| Bre_Stmt(Some(stmts)) -> 
 		let new_scope = gen_inc_scope() in
 		let env = (fst env, new_scope :: (snd env))	in
-		"{\n  " ^ String.concat "\n" (List.rev_map (string_of_stmt env) stmts) ^ "\n}"
+		"{\n  " ^ String.concat "\n" (List.map (string_of_stmt env) stmts) ^ "\n}"
 	| Dec(datatype,d) -> (
 		let typed = type_of_dec_list env d in
 		match typed with 
