@@ -20,48 +20,50 @@ import com.leff.midi.event.meta.TimeSignature;
 
 public class test {
 	
-	public static void main(String[] args) {
-		Note n = new Note();
-		// n = n + 1
-		n = PublicFunction.plus(n,1);
-		// n = n - 2
-		n = PublicFunction.minus(n,2);
-		
-		// 1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 - ||
-		PublicFunction.setNoteDefault(C.C4, 250, 0, 200); 
-		List<Note> notes0 = new ArrayList<Note>(Arrays.asList(new Note(), new Note(),
-				new Note(C.G4),new Note(C.G4),new Note(C.A4),new Note(C.A4),new Note(C.G4,500),
-				new Note(C.F4),new Note(C.F4),new Note(C.E4),new Note(C.E4),new Note(C.D4),new Note(C.D4),
-				new Note(C.C4,500)));
+	public static Melody addChords1(Melody melody){
+		Melody newMelody = new Melody();
+		for(int i = 0;i < melody.getLength();
+		i++)
+		{
+		  Note note = melody.getNote(i);
+		int pitch = note.getPitch() - 3;
+		int duration = note.getDuration();
+		int starttime = note.getStartTime();
+		int strength = note.getStrength();
+		Note chord = new Note(pitch, duration, starttime, strength);
+		newMelody.addNote(chord);
 
-		// 1 - 5 - | 6 - 5 - | 4 - 3 - | 2 - 1 - ||
-		PublicFunction.setNoteDefault(C.C4, 500, 0, 50); 
-		List<Note> notes1 = new ArrayList<Note>(Arrays.asList(new Note(),new Note(C.G4),
-				new Note(C.A4),new Note(C.G4),new Note(C.F4),new Note(C.E4),
-				new Note(C.D4),new Note()));
-		
-		// Create melody
-		Melody melody0 =  new Melody(notes0);
-		Melody melody1 = new Melody(notes1);
-		
-		// Put into track list
-		List<Track> tracks = new ArrayList<Track>(Arrays.asList(new Track(melody0,C.PIANO),
-				new Track(melody1, C.VIOLIN)));
+		}
+		return newMelody;
+		}
 
-		// Create music
-		Music music = new Music(tracks);
-		
-		// Write to File
-		PublicFunction.write(music, "twinkle_twinkle.mid");
-		
-		// Test Read and Write
-		Music msc = PublicFunction.read("twinkle_twinkle.mid");
-		PublicFunction.write(msc, "twinkle_twinkle2.mid");
-		
-		long test1 = 10;
-		int test2 = (int) test1;
-		System.out.println(test2);
-		
-        System.out.println("Done...");
-	}
+		public static Melody addChords2(Melody melody){
+		Melody newMelody = new Melody();
+		int i = 0;
+		while(true){
+		  Note note = melody.getNote(i);
+		int pitch = note.getPitch() - 3;
+		int duration = note.getDuration();
+		int starttime = note.getStartTime();
+		int strength = note.getStrength();
+		Note chord = new Note(pitch, duration, starttime, strength);
+		newMelody.addNote(chord);
+
+		i++;
+
+		if (i >= melody.getLength())break;
+		}
+		return newMelody;
+		}
+
+		public static void main(String arg[]){
+			Music music = PublicFunction.read("twinkle_twinkle3.mid");
+			Melody melody = music.getTrack(0).getMelody();
+			Melody newMelody = addChords2(melody);
+			List<Track> tracks = new ArrayList<Track>(Arrays.asList(music.getTrack(0), new Track(newMelody, C.PIANO)));
+			Music newMusic = new Music(tracks);
+			PublicFunction.write(newMusic, "new_twinkle_twinkle.mid");
+
+			PublicFunction.print("Done...\n");
+		}
 }
