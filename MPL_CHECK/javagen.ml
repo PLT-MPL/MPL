@@ -150,8 +150,8 @@ let rec string_of_init env i =
 	| Func_Init(e)  -> (
 		let typeE = type_of_init env (List.hd e) in
 		match typeE with
-		| "Track" -> "new ArrayList<Track>(Arrays.asList({"^ String.concat ", " (List.rev_map (string_of_init env) e)^"}))"
-		| "Note" -> "new ArrayList<Note>(Arrays.asList({"^ String.concat ", " (List.rev_map (string_of_init env) e)^"}))"
+		| "Track" -> "new ArrayList<Track>(Arrays.asList("^ String.concat ", " (List.rev_map (string_of_init env) e)^"))"
+		| "Note" -> "new ArrayList<Note>(Arrays.asList("^ String.concat ", " (List.rev_map (string_of_init env) e)^"))"
 		|  _ -> "{" ^ String.concat ", " (List.rev_map (string_of_init env) e) ^ "}" 
 	)
 
