@@ -2,11 +2,11 @@
 
 args=("$@")
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
 echo ERROR - Illegal Number of Parameters: Expect 3 Parameters, but $# is provided.
-echo "USAGE: MPL.sh <Path/To/InputFilename.mpl> <Path/To/OutputFilename>"
+echo "USAGE: MPL.sh <Path/To/MPL.sh>  <InputFilename.mpl> <OutputFilename>"
 else
-./MPL $1 $2
-javac -cp MPL.jar $2.java
-java -cp .:MPL.jar $2
+	$1MPL $2 $3
+	javac -cp $1MPL.jar $3.java
+	java -cp .:$1MPL.jar $3
 fi
