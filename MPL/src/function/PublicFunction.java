@@ -323,18 +323,11 @@ public class PublicFunction {
 				startTime = startTime + note.getDuration();
 			}
 			Melody newMelody = new Melody(newNoteList);
-			Track newTrack = new Track(newMelody);
+			Track newTrack = new Track(newMelody, track.getTimbre());
 			newTrackList.add(newTrack);
-			System.out.println(newTrack.getMelody().getNote(0).getStartTime()+"hhhh");
+			// System.out.println(newTrack.getMelody().getNote(0).getStartTime()+"hhhh");
 		}
 		
-		for(Track track: newTrackList){
-			Melody melody = track.getMelody();
-			System.out.println("");
-			for(Note note: melody.getNoteList()){
-				System.out.println(note.getStartTime());
-			}
-		}
 		Music newMusic = new Music(newTrackList);
 
 		return newMusic;
