@@ -15,7 +15,9 @@ public class Music {
 	}
 	
 	public Music(Music music){
-		m_trackList = new ArrayList<Track>(music.getTracks());
+		m_trackList = new ArrayList<Track>();
+		for(int i = 0; i < music.getNumberOfTracks(); i++)
+			m_trackList.add(new Track(music.getTrack(i)));
 	}
 	
 	public void insertTrack(Track track){
@@ -76,12 +78,12 @@ public class Music {
 		}
 		m_trackList.addAll(trackList);
 		
-		for(Track track: m_trackList){
-			Melody melody = track.getMelody();
-			System.out.println("");
-			for(Note note: melody.getNoteList())
-				System.out.println(note.getStartTime());
-		}
+//		for(Track track: m_trackList){
+//			Melody melody = track.getMelody();
+//			System.out.println("");
+//			for(Note note: melody.getNoteList())
+//				System.out.println(note.getStartTime());
+//		}
 		
 	}
 	
