@@ -225,9 +225,14 @@ public class PublicFunction {
 		if((noteList_1 == null) || (noteList_2 == null))
 			throw new NullPointerException();
 		
-		List<Note> newNoteList = new ArrayList<Note>(noteList_1);
-		
-		newNoteList.addAll(noteList_2);
+		List<Note> newNoteList = new ArrayList<Note>();
+		for(int i = 0; i < noteList_1.size(); i++){
+			newNoteList.add(new Note(noteList_1.get(i)));
+		}
+		for(int i = 0; i < noteList_2.size(); i++){
+			newNoteList.add(new Note(noteList_2.get(i)));
+		}
+
 		Melody melody = new Melody(newNoteList);
 		return melody;
 	}
