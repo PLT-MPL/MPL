@@ -52,6 +52,33 @@ public class Melody {
 		return subMelody;
 	}
 	
+	public void speedUp(int time){
+		int len = m_noteList.size();
+		
+		for(int i=0;i<len;i++){
+			Note note = m_noteList.get(i);
+			int prevDuration = note.getDuration();
+			int prevStartTime = note.getStartTime();
+			
+			note.setDuration(prevDuration / time);
+			note.setStartTime(prevStartTime / time);
+		}
+	}
+	
+	public void speedDown(int time){
+		int len = m_noteList.size();
+		
+		for(int i=0;i<len;i++){
+			Note note = m_noteList.get(i);
+			int prevDuration = note.getDuration();
+			int prevStartTime = note.getStartTime();
+			
+			note.setDuration(prevDuration * time);
+			note.setStartTime(prevStartTime * time);
+		}
+		
+	}
+	
 	public void addNote(Note note){
 		
 		if(m_noteList == null)
@@ -79,12 +106,12 @@ public class Melody {
 		return m_noteList.size();
 	}
 	
-	public long getTimeLength(){
+	public int getTimeLength(){
 		
-		long maxEnd = 0;
+		int maxEnd = 0;
 		for(Note note : m_noteList)
 		{
-			long endtime = note.getStartTime() + note.getDuration();
+			int endtime = note.getStartTime() + note.getDuration();
 			if(endtime > maxEnd)
 				maxEnd = endtime;
 		}
@@ -101,7 +128,7 @@ public class Melody {
 		
 		int listSize = m_noteList.size();
 		Note lastNote = m_noteList.get(listSize-1);
-		long startTime = lastNote.getStartTime() + lastNote.getDuration();
+		int startTime = lastNote.getStartTime() + lastNote.getDuration();
 		 
 		for(Note note: noteList_2)
 		{

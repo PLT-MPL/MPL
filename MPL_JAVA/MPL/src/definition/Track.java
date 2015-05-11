@@ -36,7 +36,7 @@ public class Track {
 		int len = melody.getLength();
 		for(int i = 0; i < len; i++){
 			Note note = melody.getNote(i);
-			long tmp_startTime = note.getStartTime() + startTime;
+			int tmp_startTime = note.getStartTime() + startTime;
 			Note newNote = new Note(note);
 			newNote.setStartTime(tmp_startTime);
 			t_melody.addNote(newNote);
