@@ -23,9 +23,9 @@ let base_table =
 	Hashtbl.add table "Melody_getNotes" "Melody_void_array_Note";
 	Hashtbl.add table "Melody_getLength" "Melody_void_int";
 	Hashtbl.add table "Melody_getTimeLength" "Melody_void_int";
-	Hashtbl.add table "Melody_speedUp" "Melody_void_int";
-	Hashtbl.add table "Melody_speedDown" "Melody_void_int";
-	Hashtbl.add table "Melody_changeStrength" "Melody_void_int";
+	Hashtbl.add table "Melody_speedUp" "Melody_int_void";
+	Hashtbl.add table "Melody_speedDown" "Melody_int_void";
+	Hashtbl.add table "Melody_changeStrength" "Melody_int_void";
 	
 
 	Hashtbl.add table "Track_setTimbre" "Track_int_void";
