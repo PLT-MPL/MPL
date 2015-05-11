@@ -198,10 +198,10 @@ let rec string_of_stmt env stmt =
 		let strE = string_of_expr env e in
 		let strIF = string_of_stmt env stmt1 in
 		let strEL = string_of_stmt env stmt2 in
-		"if" ^ "(" ^ strE ^ ")" ^ strIF ^ "else" ^ strEL
-	| While(e,stmt) -> "while" ^ "(" ^ string_of_expr env e ^ ")" ^ string_of_stmt env stmt
-	| For_complete(stmt1,stmt2,e,stmt3) -> "for" ^ "(" ^ string_of_stmt env stmt1 ^ string_of_stmt env stmt2 ^ string_of_expr env e ^ ")\n" ^ string_of_stmt env stmt3
-	| For_part(stmt1,stmt2,stmt3) -> "for" ^ "(" ^ string_of_stmt env stmt1 ^ string_of_stmt env stmt2 ^ ")" ^ string_of_stmt env stmt3
+		"if " ^ "(" ^ strE ^ ")" ^ strIF ^ "else " ^ strEL
+	| While(e,stmt) -> "while " ^ "(" ^ string_of_expr env e ^ ")" ^ string_of_stmt env stmt
+	| For_complete(stmt1,stmt2,e,stmt3) -> "for " ^ "(" ^ string_of_stmt env stmt1 ^ string_of_stmt env stmt2 ^ string_of_expr env e ^ ")\n" ^ string_of_stmt env stmt3
+	| For_part(stmt1,stmt2,stmt3) -> "for " ^ "(" ^ string_of_stmt env stmt1 ^ string_of_stmt env stmt2 ^ ")" ^ string_of_stmt env stmt3
 	| CONTINUE -> "continue;"
 	| BREAK -> "break;"
 	| RETURN -> "return;"
