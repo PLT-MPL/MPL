@@ -33,6 +33,7 @@ let base_table =
 	Hashtbl.add table "Music_getTracks" "Music_void_array_Track";
 	Hashtbl.add table "Music_getNumberOfTracks" "Music_void_int";
 	Hashtbl.add table "Music_getTimeLength" "Music_void_int";
+	Hashtbl.add table "Music_insertTrack" "Music_Track_void";
 
 
 	Hashtbl.add table "setNoteDefault" "void_int_int_int_int_void";
