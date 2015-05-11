@@ -35,7 +35,7 @@ Melody addChords2(Melody melody){
 
 void main(string arg[]) {
 
-	Music music = read("twinkle_twinkle3.mid");
+	Music music = read("twinkle_twinkle0.mid");
 	
 	//reading music
 	Melody melody = music.getTrack(0).getMelody();
@@ -44,6 +44,14 @@ void main(string arg[]) {
 	Track tracks[] = {music.getTrack(0), Track(newMelody, PIANO)};
 	Music newMusic = Music(tracks);
 	
+	for(int i = 0; i < newMusic.getNumberOfTracks(); i++) {
+		Track currentTrack = newMusic.getTrack(i);
+   if ( i < newMusic.getNumberOfTracks() - 1) {
+       continue;
+   }
+   currentTrack.setTimbre(VIOLIN);
+}
+
 	// for each track in the music, set its timbre to VIOLIN
 	write(newMusic, "new_twinkle_twinkle.mid");
 	// export the midi file

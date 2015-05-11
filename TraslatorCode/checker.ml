@@ -218,7 +218,6 @@ let type_of_para env d =
 			let table = add_val 0 t env v in
 			Hashtbl.find table (find_name_with_scope env v)
 
-
 let rec add_func datatype env f =
 	match f with
 		Func_dec_p(s, None) ->
