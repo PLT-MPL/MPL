@@ -37,8 +37,9 @@ public class Track {
 		for(int i = 0; i < melody.getLength(); i++){
 			Note note = melody.getNote(i);
 			long tmp_startTime = note.getStartTime() + startTime;
-			note.setStartTime(tmp_startTime);
-			t_melody.addNote(note);
+			Note newNote = new Note(note);
+			newNote.setStartTime(tmp_startTime);
+			t_melody.addNote(newNote);
 		}
 	}
 	
@@ -58,4 +59,7 @@ public class Track {
 	public int getLength(){
 		return t_melody.getLength();
 	}
+	/*
+	
+	*/
 }
