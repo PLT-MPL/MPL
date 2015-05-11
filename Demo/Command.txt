@@ -1,0 +1,4 @@
+../ShellScript/MPL.sh ../ShellScript/ RowTheBoatSingle.mpl RowTheBoatSingle
+../ShellScript/MPL.sh ../ShellScript/ RowTheBoatRepeated.mpl RowTheBoatRepeated
+../ShellScript/MPL.sh ../ShellScript/ CanonInstrument.mpl CanonInstrument
+../ShellScript/MPL.sh ../ShellScript/ SuperMario.mpl SuperMario
