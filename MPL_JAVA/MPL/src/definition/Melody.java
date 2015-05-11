@@ -79,6 +79,16 @@ public class Melody {
 		
 	}
 	
+	public void changeStrength(int strength){
+		int len = m_noteList.size();
+		
+		for(int i=0;i<len;i++){
+			Note note = m_noteList.get(i);
+			note.setStrength(strength);
+		}
+		
+	}
+	
 	public void addNote(Note note){
 		
 		if(m_noteList == null)
