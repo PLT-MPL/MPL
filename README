@@ -1,16 +1,46 @@
-MPL Language -- Music Processing Language
+MPL Language 
+
+	Music Processing Language
+
+-------------------------
 
 Authors: Bo Wang, Yilin Xiong, Shengyi Lin, Ying Tan, Mengting Wu.
 
-1 Introduction
-Getting bored of recording your inspiration note by note on the paper? Want to know how does your music sound for some specified instrument directly? Instead of creating
-monotonous rhythm, want to create more attractive music? MPL is aimed at providing a
-non-traditional way for professional musicians or even beginners to create their own
-music easily and conveniently. Compositions can be completed with dynamics, arpeggios, accelerando, staccatos, repeats, and much more by simply using multiple
-libraries of existing data structures, operations and functions provided or create your own programmatically. Compose, record and arrange your song programmatically, your creativity can simply go wild by using a language like this!
+==================================================================
 
-2. How to Run
-To compile and run MPL language, it is require to have binary file -- “MPL” to translate and JAR file -- “MPL.jar” for environment. For simplification, “MPL.sh” implements all the process from translating, compiling to running. If you are under operating system like Linus, MacOS, or UNIX, you can compile and run your program with the command
+1 Introduction
+
+Getting bored of recording your inspiration note by note on the paper? 
+Want to know how does your music sound for some specified instrument directly? Instead of creating monotonous rhythm, want to create more attractive music? MPL is aimed at providing a non-traditional way for professional musicians or even beginners to create their own music easily and conveniently. Compositions can be completed with dynamics, arpeggios, accelerando, staccatos, repeats, and much more by simply using multiple libraries of existing data structures, operations and functions provided or create your own programmatically. Compose, record and arrange your song programmatically, your creativity can simply go wild by using a language like this!
+
+==================================================================
+
+2. File Introduction
+
+	Doc -
+		Including White Paper, Tutorial, Language Reference Manual, and Report.
+	
+	Translator -
+		The Translator code for 
+
+	JavaEnvironment -
+		Code for java environment supporting compiling MPL.
+
+	MIDI (GoogleCode) -
+		Google API we used to deal with Midi file.
+
+	ShellScript -
+		Shell script to compile MPL.
+
+	TestCases -
+		Examples and test cases for MPL. 
+
+
+==================================================================
+
+3. How to Run
+
+To compile and run MPL language, it is require to have binary file -- “MPL” to translate and JAR file -- “MPL.jar” for environment. For simplification, “MPL.sh” implements all the process from translating, compiling to running. They can be found in ShellScript directory. If you are under operating system like Linus, MacOS, or UNIX, you can compile and run your program with the command
 
 	/path/to/MPL/MPL.sh /path/to/MPL/ your_program.mpl result_name
 
@@ -20,32 +50,20 @@ If you are under an operating system not satisfying the requirement above, like 
 	javac -cp /path/to/MPL/MPL.jar result_name.java
 	java -cp .:/path/to/MPL/MPL.jar result_name
 
+==================================================================
 
+4. Simple Example -- Hello World
 
-process of creating the program text, compiling it, loading it, running it and finding out
-where the output went. With these mechanical details mastered, everything else is
-comparatively easy. In MPL, the program to print “hello world” is
-Example:
-void main(String arg[]) {
-print(“Hello World!\n”);
-}
+In MPL, the program to print “hello world” is
 
-If you haven’t botched anything, such as omitting a character or misspelling something,
-the hello.mpl program will proceed silently, and make an executable file called hello. If
-you run hello by typing the command
-./MPL.sh ./ hello.mpl hello
+	void main(String arg[]) {
+		print(“Hello World!\n”);
+	}
+
+If you haven’t botched anything, such as omitting a character or misspelling something, the hello.mpl program will proceed silently, and make an executable file called hello. If you run hello by typing the command
+
+	./MPL.sh ./ hello.mpl hello
+
 It will print : Hello World!
-Now, for some explanations about the program itself, a MPL program, whatever its size,
-consists of functions and variables. A function contains statements that specify the
-computing operations to be done, and variables store values used during the
-computation. Our functions are mainly C like, and our example is a function named main.
-Normally you are at liberty to give functions whatever names you like, but “main'' is
-special - your program begins executing at the beginning of main. This means that every
-program must have a main somewhere and it will usually call other functions to help
-perform its job.
-A function is called by naming it, followed by a parenthesized list of arguments, so this
-calls the function print with the argument “Hello World!\n”. The print() is a function that
-prints output, in this case the string of characters between the double quotes.
-A sequence of characters in double quotes, such as “Hello world!\n”, is a string constant
-or string literal in MPL. And the sequence \n in the string is the C-like notation for the
-newline character, when printed advances the output to the left margin is on next line
+
+==================================================================
