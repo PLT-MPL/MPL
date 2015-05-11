@@ -13,7 +13,7 @@ public class testMelody {
 	private testMelody(int testcase)
 	{
 		
-		PublicFunction.setNoteDefault(C.C4, 0, 250, 50); 
+		PublicFunction.setNoteDefault(C.C4, 250, 0, 50); 
 		
 		List<Note> notes1 = new ArrayList<Note>(Arrays.asList(new Note(),new Note(C.G4),
 				new Note(C.A4),new Note(C.G4),new Note(C.F4),new Note(C.E4),
@@ -25,7 +25,7 @@ public class testMelody {
 		music.insertTrack(track);
 		PublicFunction.write(music, "test_melody_prev.mid");
 		
-		PublicFunction.setNoteDefault(C.C4, 0, 500, 50); 
+		PublicFunction.setNoteDefault(C.C4, 500, 0, 50); 
 		List<Note> notes2 = new ArrayList<Note>(Arrays.asList(new Note(),new Note(C.G4),
 				new Note(C.A4),new Note(C.G4),new Note(C.F4),new Note()));
 		Melody melody2 = new Melody(notes2);
@@ -117,6 +117,7 @@ public class testMelody {
 	
 	public static void main(String[] args){
 		
-		testMelody test = new testMelody(4);
+		testMelody test = new testMelody(2);
+		
 	}
 }

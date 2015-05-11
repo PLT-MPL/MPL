@@ -36,9 +36,16 @@ void main(string arg[]) {
 			
 			Melody melody0 = Melody(notes0);
 			Melody melody1 = Melody(notes1);
-			Track tracks[] = {Track(melody0,VIOLIN), Track(melody1,PIANO)};
-			Music music =  Music(tracks);
+			Track tracks0[] = {Track(melody0,VIOLIN)};
+			Track tracks1[] = {Track(melody1,PIANO)};
+
+			Music music0 =  Music(tracks0);
+			Music music1 = Music(tracks1);
+			
+			Music music = music0 * music1;
+
 			Music music2 = Music(music);
+			
 			music += music2;
 			// Write to File
 			write(music, "canon.mid");

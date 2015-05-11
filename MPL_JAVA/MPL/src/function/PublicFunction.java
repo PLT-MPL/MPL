@@ -199,17 +199,16 @@ public class PublicFunction {
 		if((noteList_2 == null) ||  (noteList_1 == null))
 			throw new NullPointerException();
 		
-		int listSize = noteList_1.size();
-		Note lastNote = noteList_1.get(listSize-1);
-		int startTime = (int)lastNote.getStartTime() + (int)lastNote.getDuration();
+		int startTime = melody_1.getTimeLength();
+		for(int i = 0; i < noteList_1.size(); i++)
+			newNoteList.add(new Note(noteList_1.get(i)));
 		
-		newNoteList.addAll(noteList_1);
+		
 		for(Note note: noteList_2)
 		{
 			Note tmp = new Note(note);
-			tmp.setStartTime(startTime);
+			tmp.setStartTime(startTime+tmp.getStartTime());
 			newNoteList.add(tmp);
-			startTime = startTime + (int)note.getDuration();
 		}
 		
 		Melody melody = new Melody(newNoteList);
@@ -229,10 +228,14 @@ public class PublicFunction {
 		for(int i = 0; i < noteList_1.size(); i++){
 			newNoteList.add(new Note(noteList_1.get(i)));
 		}
+		
+		// System.out.println(noteList_1.size());
 		for(int i = 0; i < noteList_2.size(); i++){
 			newNoteList.add(new Note(noteList_2.get(i)));
 		}
-
+		// System.out.println(noteList_2.size());
+		
+		// System.out.println(newNoteList.size());
 		Melody melody = new Melody(newNoteList);
 		return melody;
 	}
@@ -274,7 +277,7 @@ public class PublicFunction {
 
 		 Melody newMelody = new Melody(melody);
 			for(int i=0;i<time-1;i++){
-				System.out.println(newMelody.getLength());
+				// System.out.println(newMelody.getLength());
 				newMelody = addMelody(newMelody,melody);
 			}
 			return newMelody;
