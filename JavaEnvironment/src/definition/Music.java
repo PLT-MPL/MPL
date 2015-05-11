@@ -37,8 +37,8 @@ public class Music {
 		return m_trackList.size();
 	}
 	
-	public int getTimeLength(){
-		int maxTimeLength = 0;
+	public long getTimeLength(){
+		long maxTimeLength = 0;
 		for(Track track : m_trackList)
 			if(track.getMelody().getTimeLength() > maxTimeLength)
 				maxTimeLength = track.getMelody().getTimeLength();
@@ -53,7 +53,7 @@ public class Music {
 		if(trackList == null) 
 				throw new NullPointerException();
 
-		int maxEndTime = getTimeLength();
+		long maxEndTime = getTimeLength();
 		
 		for(Track track : trackList)
 		{
@@ -65,7 +65,7 @@ public class Music {
 			if(noteLists == null)
 				throw new NullPointerException();
 			
-			int startTime = maxEndTime;
+			long startTime = maxEndTime;
 			for(Note note: noteLists)
 			{
 				note.setStartTime(startTime);

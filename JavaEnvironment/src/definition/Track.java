@@ -35,8 +35,8 @@ public class Track {
 			throw new IllegalArgumentException();
 		
 		for(int i = 0; i < melody.getLength(); i++){
-			Note note = melody.getNote(0);
-			int tmp_startTime = note.getStartTime() + startTime;
+			Note note = melody.getNote(i);
+			long tmp_startTime = note.getStartTime() + startTime;
 			note.setStartTime(tmp_startTime);
 			t_melody.addNote(note);
 		}
